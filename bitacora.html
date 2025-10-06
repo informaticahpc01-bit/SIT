@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT - Bitácora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+     <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/bitacora.css">
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Admin</div>
+        <div class="subtitle">Panel de gestión tecnológica</div>
+      </div>
+    </div>
+
+    <div class="menu">
+         <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+      <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
+      <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
+      <button onclick="window.location.href='chat.html'">💬 Chat</button>
+      <button onclick="window.location.href='reportes.html'">📑 Reportes</button>
+      <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
+      <button class="active">📂 Bitácora</button>
+    </div>
+
+    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    <div class="sidebar-footer">
+      Usuario: <span id="userName">Cargando...</span><br>
+      Sesión activa
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h1>Bitácora</h1>
+        <p>Registro de actividades realizadas en el sistema</p>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="card">
+      <h2>Filtros</h2>
+      <form id="filtroForm" class="filtros">
+        <!-- Fechas -->
+        <div class="filtro-item">
+          <label for="fechaInicio">📅 Desde</label>
+          <input type="date" id="fechaInicio">
+        </div>
+        <div class="filtro-item">
+          <label for="fechaFin">📅 Hasta</label>
+          <input type="date" id="fechaFin">
+        </div>
+
+        <!-- Rango rápido -->
+        <div class="filtro-item">
+          <label for="rangoRapido">⚡ Rango rápido</label>
+          <select id="rangoRapido">
+            <option value="">-- Selecciona --</option>
+            <option value="hoy">Hoy</option>
+            <option value="ayer">Ayer</option>
+            <option value="7">Últimos 7 días</option>
+            <option value="30">Últimos 30 días</option>
+            <option value="mes">Este mes</option>
+          </select>
+        </div>
+
+        <!-- Usuario -->
+        <div class="filtro-item">
+          <label for="rangoRapido">👤 Usuarios</label>
+          <select id="usuarioFiltro">
+            <option value="">Todos</option>
+          </select>
+        </div>
+
+        <!-- Acción -->
+        <div class="filtro-item">
+          <label for="rangoRapido">🔧 Accion</label>
+          <select id="accionFiltro">
+            <option value="">Todas</option>
+          </select>
+
+        </div>
+
+        <!-- Botones -->
+        <div class="filtro-acciones">
+          <button type="submit" class="btn-new">🔍 Filtrar</button>
+          <button type="button" id="btnReset" class="btn-secondary">♻ Restablecer</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Acciones -->
+    <div style="margin:15px 0; display:flex; gap:10px;">
+      <button class="btn-new" id="btnExportPDF">📄 Exportar PDF</button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+      <h2>Registros</h2>
+      <table class="users-table">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Acción</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBitacora"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- Librerías -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <script type="module" src="js/bitacora.js"></script>
+</body>
+
+</html>

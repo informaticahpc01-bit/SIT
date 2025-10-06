@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIT - Departamentos</title>
+
+    <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos globales y propios -->
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/departamentos.css" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Admin</div>
+        <div class="subtitle">Panel de gestión tecnológica</div>
+      </div>
+    </div>
+    <div class="menu">
+      <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+      <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
+      <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
+      <button onclick="window.location.href='chat.html'">💬 Chat</button>
+      <button onclick="window.location.href='reportes.html'">📑 Reportes</button>
+      <button class="active">🏢 Departamentos</button>
+      <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
+    </div>
+    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+  </aside>
+
+  <!-- Contenido -->
+  <div class="container">
+    <h1>Gestión de Departamentos</h1>
+
+    <!-- Card de creación -->
+    <div class="card">
+      <div class="card-header">
+        <h2>➕ Crear Departamento</h2>
+      </div>
+      <div class="card-body">
+        <form id="formDept">
+          <input id="deptName" placeholder="Nombre del departamento" required />
+          <button class="btn-primary" type="submit">Agregar</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Card de tabla -->
+    <div class="card">
+      <div class="card-header">
+        <h2>📋 Lista de Departamentos</h2>
+      </div>
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Fecha de Creación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="deptTable">
+            <!-- Ejemplo de fila -->
+            <tr>
+              <td>Recursos Humanos</td>
+              <td>2025-09-18</td>
+              <td>
+                <button class="btn-primary">✏ Editar</button>
+                <button class="btn-danger">🗑 Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay">⏳ Procesando, por favor espera...</div>
+
+  <!-- JS -->
+  <script type="module" src="js/departamentos.js"></script>
+</body>
+</html>

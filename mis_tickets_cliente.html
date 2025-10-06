@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIT • Mis Tickets</title>
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/mis_tickets_cliente.css" />
+</head>
+<body>
+  <!-- ==== SIDEBAR ==== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Cliente</div>
+        <div class="subtitle">Panel de usuario</div>
+      </div>
+    </div>
+    <div class="menu">
+      <button onclick="location.href='dashboard_cliente.html'">📊 Dashboard</button>
+      <button class="active">🎫 Mis Tickets</button>
+      <button onclick="location.href='nuevo_ticket_cliente.html'">➕ Nuevo Ticket</button>
+      <button onclick="location.href='chat_cliente.html'">💬 Chat</button>
+      <button onclick="location.href='perfil_cliente.html'">👤 Perfil</button>
+    </div>
+    <button class="btn-logout">🚪 Cerrar sesión</button>
+  </aside>
+
+  <!-- ==== MAIN ==== -->
+  <main class="main">
+    <h1>🎫 Mis Tickets</h1>
+
+    <!-- ==== FILTROS ==== -->
+    <div class="filtros">
+      <input type="text" id="buscarTexto" placeholder="🔍 Buscar por asunto o descripción..." />
+
+      <select id="filtroEstado">
+        <option value="todos">Todos</option>
+        <option value="pendiente">Pendiente</option>
+        <option value="proceso">En Proceso</option>
+        <option value="cerrado">Cerrado</option>
+      </select>
+
+      <select id="filtroPrioridad">
+        <option value="todas">Todas</option>
+        <option value="alta">Alta</option>
+        <option value="media">Media</option>
+        <option value="baja">Baja</option>
+      </select>
+
+      <select id="filtroFecha">
+        <option value="todas">Todas las fechas</option>
+        <option value="hoy">Hoy</option>
+        <option value="semana">Esta semana</option>
+        <option value="mes">Este mes</option>
+        <option value="personalizado">Personalizado</option>
+      </select>
+
+      <input type="date" id="fechaInicio" class="date-filter" style="display:none;">
+      <input type="date" id="fechaFin" class="date-filter" style="display:none;">
+
+      <button id="btnReset" class="btn-reset">♻️ Restablecer</button>
+    </div>
+
+    <!-- ==== LISTA ==== -->
+    <div id="listaTickets" class="list"></div>
+  </main>
+
+  <script type="module" src="js/mis_tickets_cliente.js"></script>
+</body>
+</html>

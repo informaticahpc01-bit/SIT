@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT • Detalle Ticket</title>
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/detalle_ticket.css">
+</head>
+<body>
+  <!-- ==== NAVBAR SIMPLE ==== -->
+  <header class="header">
+    <h1>Detalle del Ticket</h1>
+    <button id="btnVolver">⬅️ Volver</button>
+  </header>
+
+  <main>
+    <!-- ==== Información del ticket ==== -->
+    <section id="detalleTicket" class="detalle-card">
+      <p>Cargando ticket...</p>
+    </section>
+
+    <!-- ==== Comentarios ==== -->
+    <section class="comentarios" id="comentariosSection">
+      <h2>💬 Comentarios</h2>
+      <div id="listaComentarios" class="lista-comentarios">
+        <p class="empty">Sin comentarios aún</p>
+      </div>
+      <div class="nuevo-comentario">
+        <textarea id="textoComentario" placeholder="Escribe un comentario..." rows="3"></textarea>
+        <button id="btnAgregarComentario">➕ Agregar comentario</button>
+      </div>
+    </section>
+
+    <!-- ==== Acciones rápidas ==== -->
+    <section class="acciones">
+      <h2>Acciones</h2>
+
+      <!-- Acciones normales (solo si el ticket está abierto) -->
+      <div id="accionesNormales">
+        <div>
+          <label for="nuevoTecnico">Reasignar técnico:</label>
+          <select id="nuevoTecnico"></select>
+          <button id="btnReasignar">Reasignar</button>
+        </div>
+
+        <div>
+          <button id="btnCerrarTicket" class="danger">✅ Cerrar ticket con solución</button>
+        </div>
+      </div>
+
+      <!-- Acciones si el ticket está cerrado -->
+      <div id="accionesCerrado" style="display:none;">
+        <button id="btnReimprimir">📄 Reimprimir Ticket</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==== Modal para solución ==== -->
+  <div id="modalSolucion" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h3>Agregar solución al ticket</h3>
+      <textarea id="textoSolucion" placeholder="Describe la solución..." rows="5"></textarea>
+      <div class="modal-actions">
+        <button id="btnGuardarSolucion">💾 Guardar</button>
+        <button id="btnCancelarModal">❌ Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==== Contenedor de toasts ==== -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- jsPDF AutoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <script type="module" src="js/detalle_ticket.js"></script>
+</body>
+</html>

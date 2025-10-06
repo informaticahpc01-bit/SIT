@@ -1,0 +1,210 @@
+:root {
+  --bg: #0f172a;
+  --sidebar: #111827;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --accent1: #10b981;
+  --accent2: #3b82f6;
+  --danger: #ef4444;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 220px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 40px;
+}
+
+.main h1 {
+  font-size: 22px;
+  margin-bottom: 25px;
+  color: #fff;
+}
+
+/* Formulario */
+.form {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+}
+
+.form input,
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text);
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, background 0.2s;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  border-color: var(--accent2);
+  background: rgba(31, 41, 55, 0.9);
+}
+
+.form textarea {
+  resize: none;
+}
+
+.form select option {
+  background: #1f2937;
+  color: #f3f4f6;
+}
+
+/* Botón */
+.form .btn-reset {
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent2);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.form .btn-reset:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* ==== Toasts ==== */
+#toastContainer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 2000;
+}
+
+.toast {
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+  animation: fadeInOut 4s forwards;
+  opacity: 0.95;
+}
+
+/* Tipos de mensaje */
+.toast.info {
+  background: #3b82f6; /* Azul */
+}
+.toast.success {
+  background: #10b981; /* Verde */
+}
+.toast.error {
+  background: #ef4444; /* Rojo */
+}
+.toast.warning {
+  background: #f59e0b; /* Naranja */
+}
+
+/* Animación */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}

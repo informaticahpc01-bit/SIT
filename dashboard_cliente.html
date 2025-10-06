@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT • Dashboard Cliente</title>
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/dashboard_cliente.css">
+</head>
+
+<body>
+  <!-- ==== SIDEBAR ==== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Cliente</div>
+        <div class="subtitle">Panel de usuario</div>
+      </div>
+    </div>
+    <div class="menu">
+      <button class="active">📊 Dashboard</button>
+      <button onclick="location.href='mis_tickets_cliente.html'">🎫 Mis Tickets</button>
+      <button onclick="location.href='nuevo_ticket_cliente.html'">➕ Nuevo Ticket</button>
+      <button onclick="location.href='chat_cliente.html'">💬 Chat</button>
+      <button onclick="location.href='perfil_cliente.html'">👤 Perfil</button>
+    </div>
+    <button class="btn-logout">🚪 Cerrar sesión</button>
+  </aside>
+
+  <!-- ==== MAIN ==== -->
+  <main class="main">
+    <div class="main-header">
+      <h1>Bienvenido Cliente</h1>
+      <p>Resumen de tu actividad en el sistema</p>
+    </div>
+
+    <!-- Tarjetas resumen -->
+    <div class="cards-grid">
+      <div class="card">
+        <h2>⏳ Pendientes</h2>
+        <p><strong id="resumenPendientes">0</strong> tickets esperando respuesta</p>
+      </div>
+
+      <div class="card">
+        <h2>🔄 En Proceso</h2>
+        <p><strong id="resumenProceso">0</strong> tickets en atención</p>
+      </div>
+
+      <div class="card">
+        <h2>✅ Cerrados</h2>
+        <p><strong id="resumenCerrados">0</strong> tickets finalizados</p>
+      </div>
+    </div>
+
+    <!-- Últimos tickets creados -->
+    <div class="card">
+      <h2>📝 Últimos Tickets</h2>
+      <div id="listaUltimos">
+        <p class="empty">Aún no has creado tickets...</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==== Importar JavaScript ==== -->
+  <script type="module" src="js/dashboard_cliente.js"></script>
+</body>
+
+</html>

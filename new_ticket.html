@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro de Ticket - SIT</title>
+    <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/nuevo_ticket.css">
+</head>
+<body>
+  <main class="main">
+    <div class="header">
+      <h1>Registro de Ticket</h1>
+      <p>Por favor complete la siguiente información para registrar un nuevo ticket</p>
+    </div>
+
+    <div class="ticket-card">
+      <form id="formTicket">
+        <div class="form-group">
+          <label for="asunto">Asunto</label>
+          <input type="text" id="asunto" placeholder="Ingrese un título breve del problema" required>
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" placeholder="Describa el inconveniente de manera detallada" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria">Categoría</label>
+          <select id="categoria" required>
+            <option value="">Seleccione la categoría</option>
+            <option>Hardware</option>
+            <option>Software</option>
+            <option>Red</option>
+            <option>Otro</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="departamento">Departamento</label>
+          <select id="departamento" required>
+            <option value="">Seleccione el departamento</option>
+            <!-- Se llenará dinámicamente -->
+          </select>
+        </div>
+
+        <div id="priorityBlock" class="form-group" style="display:none">
+          <label for="prioridad">Prioridad</label>
+          <select id="prioridad">
+            <option value="Baja">Baja</option>
+            <option value="Media">Media</option>
+            <option value="Alta">Alta</option>
+            <option value="Crítica">Crítica</option>
+          </select>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">💾 Guardar Ticket</button>
+          <button type="button" class="btn btn-secondary" onclick="window.location.href='dashboard.html'">⬅ Regresar</button>
+        </div>
+      </form>
+
+      <p class="msg error" id="msgError"></p>
+      <p class="msg ok" id="msgOk"></p>
+    </div>
+  </main>
+
+  <script type="module" src="js/tickets.js"></script>
+</body>
+</html>

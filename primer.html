@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Crear Primer Usuario</title>
+  <link rel="icon" type="image/png" href="assets/icons/logop.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #111827;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #374151;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+    }
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #2563eb;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #1e40af;
+    }
+    .msg {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Registrar Primer Usuario</h2>
+    <form id="formPrimerUsuario">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" required>
+
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" required>
+
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" required>
+
+      <button type="submit">Crear Usuario Admin</button>
+      <div class="msg" id="msg"></div>
+    </form>
+  </div>
+
+<script type="module">
+  import { auth, db } from "./js/firebase.js";
+  import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+  import { collection, getDocs, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+  const form = document.getElementById("formPrimerUsuario");
+  const msg = document.getElementById("msg");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    msg.textContent = "";
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+    const password = document.getElementById("password").value;
+
+    try {
+      // 🔹 Verificar si ya existen usuarios en Firestore
+      const snapshot = await getDocs(collection(db, "usuarios"));
+      if (!snapshot.empty) {
+        msg.style.color = "red";
+        msg.textContent = "⚠️ Ya existe un usuario en el sistema. Use el login normal.";
+        return;
+      }
+
+      // 🔹 Crear usuario en Auth
+      const cred = await createUserWithEmailAndPassword(auth, correo, password);
+
+      // 🔹 Guardar en Firestore como Administrador
+      await setDoc(doc(db, "usuarios", cred.user.uid), {
+        uid: cred.user.uid,
+        nombre,
+        correo,
+        rol: "Administrador",
+        creadoEn: serverTimestamp()
+      });
+
+      msg.style.color = "green";
+      msg.textContent = `✅ Usuario ${nombre} creado correctamente como Administrador.`;
+      form.reset();
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = `❌ Error: ${error.message}`;
+    }
+  });
+</script>
+
+</body>
+</html>

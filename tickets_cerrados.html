@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT • Tickets Cerrados</title>
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+    <link rel="stylesheet" href="css/tickets_proceso.css">
+</head>
+<body>
+  <!-- ==== SIDEBAR ==== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Técnico</div>
+        <div class="subtitle">Panel de soporte</div>
+      </div>
+    </div>
+    <div class="menu">
+      <button onclick="location.href='dashboard_tech.html'">📊 Dashboard</button>
+      <button onclick="location.href='mis_tickets.html'">🎫 Mis Tickets</button>
+      <button onclick="location.href='tickets_proceso.html'">🔧 En Proceso</button>
+      <button class="active">✅ Cerrados</button>
+      <button onclick="location.href='chatTecnico.html'">💬 Chat</button>
+      <button onclick="location.href='perfil_Tecnico.html'">👤 Perfil</button>
+    </div>
+    <button class="btn-logout">🚪 Cerrar sesión</button>
+  </aside>
+
+  <!-- ==== MAIN ==== -->
+  <main class="main">
+    <h1>✅ Tickets Cerrados</h1>
+    <div id="listaTickets" class="list"></div>
+  </main>
+
+  <script type="module" src="js/tickets_cerrados.js"></script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalle de Ticket - SIT</title>
+    <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+
+  <link rel="stylesheet" href="css/detalleti.css">
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Admin</div>
+        <div class="subtitle">Panel de gestión tecnológica</div>
+      </div>
+    </div>
+    <div class="menu">
+      <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+      <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
+      <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
+      <button onclick="window.location.href='chat.html'">💬 Chat</button>
+      <button onclick="window.location.href='reportes.html'">📑 Reportes</button>
+      <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
+      <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
+    </div>
+    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="main-header">
+      <div>
+        <h1>Detalle del Ticket</h1>
+        <p>Visualiza y actualiza la información del ticket</p>
+      </div>
+      <button class="btn-new" onclick="location.href='tickets.html'">← Regresar</button>
+    </div>
+
+    <div class="ticket-detail" id="ticketDetail">
+      <h2 id="asunto">Cargando...</h2>
+      <p class="ticket-meta"><strong>Descripción:</strong> <span id="descripcion"></span></p>
+      <p class="ticket-meta"><strong>Categoría:</strong> <span id="categoria"></span></p>
+      <p class="ticket-meta"><strong>Departamento:</strong> <span id="departamento"></span></p>
+      <p class="ticket-meta"><strong>Prioridad:</strong> <span id="prioridad"></span></p>
+      <p class="ticket-meta"><strong>Estado:</strong> <span id="estado" class="badge pendiente"></span></p>
+      <p class="ticket-meta"><strong>Creado por:</strong> <span id="creadoPor"></span></p>
+      <p class="ticket-meta"><strong>Fecha:</strong> <span id="fecha"></span></p>
+
+      <!-- Solo visible para admin/técnico -->
+      <div class="state-buttons" id="stateButtons" style="display:none">
+        <button class="state-pendiente" onclick="actualizarEstado('Pendiente')">Marcar Pendiente</button>
+        <button class="state-proceso" onclick="actualizarEstado('En proceso')">Marcar En proceso</button>
+        <button class="state-cerrado" onclick="actualizarEstado('Cerrado')">Marcar Cerrado</button>
+      </div>
+    </div>
+
+    <!-- Comentarios -->
+    <div class="comments">
+      <h3>Comentarios</h3>
+      <div id="comentariosList"></div>
+      <textarea id="comentarioInput" placeholder="Escribe un comentario..."></textarea>
+      <button class="btn-new" id="btnComentar">💬 Comentar</button>
+    </div>
+
+    <!-- Modal Solución -->
+    <div id="modalSolucion" class="modal" style="display:none">
+      <div class="modal-content">
+        <h2>Registrar Solución</h2>
+        <textarea id="inputSolucion" placeholder="Describe la solución brindada..." rows="5"></textarea>
+        <div class="modal-actions">
+          <button id="btnGuardarSolucion" class="btn">💾 Guardar y Cerrar Ticket</button>
+          <button id="btnCancelarSolucion" class="btn-secondary">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <script type="module" src="js/ticket_detalle.js"></script>
+</body>
+
+</html>

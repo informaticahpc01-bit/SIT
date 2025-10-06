@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT • Detalle Ticket Cliente</title>
+
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/detalle_ticket_cliente.css">
+  <!-- jsPDF para exportar -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <!-- ==== NAVBAR SIMPLE ==== -->
+  <header class="header">
+    <h1>📄 Detalle del Ticket</h1>
+    <div class="acciones">
+      <button id="btnVolver">⬅️ Volver</button>
+         </div>
+  </header>
+
+  <main>
+    <!-- ==== Información del ticket ==== -->
+    <section id="detalleTicket" class="detalle-card">
+      <p>Cargando ticket...</p>
+    </section>
+
+    <!-- ==== Comentarios ==== -->
+    <section class="comentarios">
+      <h2>💬 Conversación</h2>
+      <div id="listaComentarios" class="lista-comentarios">
+        <p class="empty">Sin comentarios aún</p>
+      </div>
+    </section>
+  </main>
+ <!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- jsPDF AutoTable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <script type="module" src="js/detalle_ticket_cliente.js"></script>
+</body>
+</html>

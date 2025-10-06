@@ -1,0 +1,229 @@
+:root {
+    --bg: #0f1724;
+    --card: #0b1220;
+    --accent: #6ee7b7;
+    --muted: #94a3b8;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-2: rgba(255, 255, 255, 0.02);
+    --bg: #0f172a;
+    --sidebar: #111827;
+    --card: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #f3f4f6;
+    --muted: #94a3b8;
+    --accent1: #10b981;
+    --accent2: #3b82f6;
+    --danger: #ef4444;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: 100vh;
+    background: linear-gradient(180deg, #061022 0%, #071428 100%);
+    color: #e6eef6;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* Main */
+.main {
+    padding: 28px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.main-header p {
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.main-header .actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.main-header input {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 13px;
+}
+
+.btn-new {
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: var(--card);
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.card h2 {
+    font-size: 14px;
+    margin: 0 0 10px;
+    color: #e2e8f0;
+}
+
+.card p,
+.card li {
+    font-size: 13px;
+    color: #cbd5e1;
+    margin: 5px 0;
+}
+
+
+.ticket-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 12px;
+}
+
+.ticket-card h3 {
+    margin: 0 0 8px;
+}
+
+.ticket-card a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.ticket-card a:hover {
+    text-decoration: underline;
+}
+
+.badge {
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 12px;
+}
+
+/* Estado Pendiente o Abierto */
+.badge.pendiente,
+.badge.abierto {
+    background: rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
+/* Estado En proceso */
+.badge.e\n-proceso {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+/* Estado Cerrado */
+.badge.cerrado {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+/* Sidebar footer */
+.sidebar-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}

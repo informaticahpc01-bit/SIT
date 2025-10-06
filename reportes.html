@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIT — Reportes</title>
+    <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/reportes.css" />
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">SIT</div>
+      <div class="brand-text">
+        <div class="brand-title">SIT — Admin</div>
+        <div class="brand-subtitle">Módulo de reportes</div>
+      </div>
+    </div>
+
+    <nav class="menu">
+      <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+      <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
+      <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
+      <button onclick="window.location.href='chat.html'">💬 Chat</button>
+      <button class="active">📑 Reportes</button>
+      <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
+      <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
+    </nav>
+
+    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+    <div class="sidebar-footer">
+      Usuario: <span id="userName">Cargando...</span><br />
+      Sesión activa
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <!-- Header -->
+    <header class="main-header">
+      <div>
+        <h1>Reportes de Tickets</h1>
+        <p>Análisis visual y métricas en tiempo real</p>
+      </div>
+      <div class="actions">
+        <button id="btnExportPDF" class="btn btn-primary">
+          📄 Exportar PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Filtros -->
+    <section class="card filters">
+      <div class="filter-row">
+        <div class="field">
+          <label for="fechaInicio">📅 Desde</label>
+          <input type="date" id="fechaInicio" />
+        </div>
+        <div class="field">
+          <label for="fechaFin">Hasta</label>
+          <input type="date" id="fechaFin" />
+        </div>
+        <div class="field">
+          <label for="rangoRapido">Rango rápido</label>
+          <select id="rangoRapido">
+            <option value="">— Seleccione —</option>
+            <option value="7d">Últimos 7 días</option>
+            <option value="30d">Últimos 30 días</option>
+            <option value="90d">Últimos 3 meses</option>
+            <option value="mes">Este mes</option>
+            <option value="anio">Este año</option>
+            <option value="all">Todo el histórico</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>&nbsp;</label>
+          <button id="btnFiltrar" class="btn btn-secondary w-full">Filtrar</button>
+        </div>
+      </div>
+      <div id="filtroInfo" class="filter-info">📊 Mostrando todo el histórico</div>
+    </section>
+
+    <!-- Métricas -->
+    <section class="metrics">
+      <article class="metric-card">
+        <div class="metric-icon bg-blue"><i data-lucide="ticket"></i></div>
+        <div class="metric-body">
+          <h3>Tickets Cerrados</h3>
+          <p id="totalTickets">0</p>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon bg-orange"><i data-lucide="clock"></i></div>
+        <div class="metric-body">
+          <h3>Prom. Respuesta</h3>
+          <p id="promRespuesta">N/A</p>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon bg-green"><i data-lucide="check-circle"></i></div>
+        <div class="metric-body">
+          <h3>Prom. Resolución</h3>
+          <p id="promResolucion">N/A</p>
+        </div>
+      </article>
+      <article class="metric-card">
+        <div class="metric-icon bg-purple"><i data-lucide="loader"></i></div>
+        <div class="metric-body">
+          <h3>En Proceso</h3>
+          <p id="ticketsProceso">0</p>
+        </div>
+      </article>
+    </section>
+
+    <!-- Gráficas -->
+    <section class="charts">
+      <div class="chart-card medium">
+        <div class="chart-header">
+          <h4>📊 Tickets por Estado</h4>
+        </div>
+        <canvas id="chartEstado"></canvas>
+      </div>
+      <div class="chart-card medium">
+        <div class="chart-header">
+          <h4>🏢 Tickets por Departamento</h4>
+        </div>
+        <canvas id="chartDepto"></canvas>
+      </div>
+      <div class="chart-card large">
+        <div class="chart-header">
+          <h4>⏱ Promedio de Respuesta por Mes</h4>
+        </div>
+        <canvas id="chartRespuestaMes"></canvas>
+      </div>
+      <div class="chart-card large">
+        <div class="chart-header">
+          <h4>✅ Promedio de Resolución por Mes</h4>
+        </div>
+        <canvas id="chartResolucionMes"></canvas>
+      </div>
+    </section>
+
+    <!-- Tabla -->
+    <section class="card">
+      <div class="table-head">
+        <h4>Tickets Cerrados (detalle)</h4>
+      </div>
+      <div class="table-wrap">
+        <table id="tablaResolucion">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Asunto</th>
+              <th>Fecha Creación</th>
+              <th>Fecha Cierre</th>
+              <th>Tiempo Resolución</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Librerías -->
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+  <script type="module" src="js/reportes.js"></script>
+</body>
+
+</html>

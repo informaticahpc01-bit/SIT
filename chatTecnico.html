@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SIT • Chat Técnico</title>
+      <!-- logo de pa pesta;a de la pagina -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="stylesheet" href="css/ChatCliente.css">
+</head>
+
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">SIT</div>
+        <div>
+          <div class="title">SIT - Técnico</div>
+          <div class="subtitle">Panel de soporte</div>
+        </div>
+      </div>
+
+      <div class="menu">
+        <button onclick="window.location.href='dashboard_tech.html'">📊 Dashboard</button>
+        <button onclick="window.location.href='mis_tickets.html'">🎫 Mis Tickets</button>
+        <button onclick="window.location.href='tickets_proceso.html'">🔧 En Proceso</button>
+        <button onclick="window.location.href='tickets_cerrados.html'">✅ Cerrados</button>
+        <button class="active">💬 Chat</button>
+        <button onclick="window.location.href='perfil_Tecnico.html'">👤 Perfil</button>
+      </div>
+
+      <button class="btn-logout" id="btnLogout">🚪 Cerrar sesión</button>
+      <div class="sidebar-footer">
+        Usuario: <span id="userName">Cargando...</span>
+      </div>
+    </aside>
+
+    <!-- ===== CONTENIDO ===== -->
+    <main class="content">
+      <div class="chat-layout">
+        <!-- Slider de Tickets -->
+        <aside class="tickets-slider">
+          <h3>Tickets Pendientes / En Proceso</h3>
+          <div id="listaTickets" class="ticket-list"></div>
+        </aside>
+
+        <!-- Panel de Chat -->
+        <div class="chat-panel">
+          <div class="chat-header">
+            <h3 id="chatTitulo">Selecciona un ticket</h3>
+            <button id="btnDetalles" class="icon-btn" title="Ver detalles">❗</button>
+          </div>
+
+          <!-- Caja de mensajes -->
+          <div id="chatBox" class="chat-box"></div>
+
+          <!-- Indicador escribiendo -->
+          <div id="typingBox" class="typing-box"></div>
+
+          <!-- Área de previsualización de adjuntos -->
+          <div id="previewArea" class="preview-area"></div>
+
+          <!-- Input de mensajes -->
+          <div class="chat-input">
+            <input type="text" id="mensajeInput" placeholder="Escribe un mensaje y presiona Enter…">
+
+            <!-- Input oculto para adjuntos -->
+            <input type="file" id="fileInput" style="display:none" />
+
+            <!-- Botón de adjuntar -->
+            <button id="btnAdjunto" title="Adjuntar archivo">📎</button>
+
+            <!-- Botón de enviar -->
+            <button id="btnEnviar">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Panel lateral de detalles -->
+  <div id="detallePanel" class="detalle-panel hidden">
+    <div class="detalle-header">
+      <h3>Detalles del Ticket</h3>
+      <button id="cerrarDetalle" title="Cerrar">✖</button>
+    </div>
+    <div id="detalleContenido"></div>
+  </div>
+
+  <script type="module" src="js/chatTecnico.js"></script>
+</body>
+
+</html>

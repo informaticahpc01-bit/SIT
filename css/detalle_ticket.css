@@ -1,0 +1,344 @@
+:root {
+  --bg: #0f172a;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --danger: #ef4444;
+  --accent1: #10b981;
+  --accent2: #3b82f6;
+  --accent3: #facc15;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  min-height: 100vh;
+}
+
+/* ===== Header ===== */
+.header {
+  background: var(--card);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.header h1 {
+  font-size: 18px;
+}
+
+.header button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent2);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s;
+}
+
+.header button:hover {
+  background: #2563eb;
+}
+
+/* ===== Detalle card ===== */
+.detalle-card {
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.ticket-detalle h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.ticket-detalle p {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: var(--text);
+}
+
+/* ===== Comentarios ===== */
+.comentarios {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.comentarios h2 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.lista-comentarios {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.comentario {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.comentario p {
+  margin-bottom: 4px;
+  color: var(--text);
+}
+
+.comentario small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.nuevo-comentario {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nuevo-comentario textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text);
+  font-size: 13px;
+  resize: none;
+}
+
+.nuevo-comentario button {
+  align-self: flex-end;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent2);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.nuevo-comentario button:hover {
+  background: #2563eb;
+}
+
+/* ===== Comentarios deshabilitados ===== */
+.nuevo-comentario textarea:disabled {
+  background: #1f2937;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+.nuevo-comentario button.disabled,
+.nuevo-comentario button:disabled {
+  background: #374151;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+/* ===== Acciones ===== */
+.acciones {
+  max-width: 700px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.acciones h2 {
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.acciones div {
+  margin-bottom: 15px;
+}
+
+.acciones label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.acciones select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.acciones button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.acciones button:not(.danger) {
+  background: var(--accent2);
+  color: white;
+}
+
+.acciones button:hover:not(.danger) {
+  background: #2563eb;
+}
+
+.acciones .danger {
+  background: var(--danger);
+  color: white;
+}
+
+.acciones .danger:hover {
+  background: #b91c1c;
+}
+
+/* ===== Botones deshabilitados ===== */
+.acciones button.disabled,
+.acciones button:disabled {
+  background: #374151;
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+/* ===== Modal ===== */
+.modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  border: 1px solid var(--border);
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  color: var(--accent2);
+  margin-bottom: 12px;
+}
+
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text);
+  margin-bottom: 15px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.modal-actions button:first-child {
+  background: var(--accent1);
+  color: white;
+}
+
+.modal-actions button:first-child:hover {
+  background: #059669;
+}
+
+.modal-actions button:last-child {
+  background: var(--danger);
+  color: white;
+}
+
+.modal-actions button:last-child:hover {
+  background: #b91c1c;
+}
+
+/* ===== Toasts ===== */
+.toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toast {
+  min-width: 250px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: translateX(100%);
+  animation: slideIn 0.4s forwards, fadeOut 0.5s 3.5s forwards;
+}
+
+.toast.success { background: #16a34a; }
+.toast.error   { background: #dc2626; }
+.toast.info    { background: #2563eb; }
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}

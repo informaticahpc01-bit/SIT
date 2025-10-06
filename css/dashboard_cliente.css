@@ -1,0 +1,249 @@
+:root {
+  --bg: #0f172a;
+  --sidebar: #111827;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --accent: #6ee7b7; /* tono cliente */
+  --accent1: #10b981; /* verde */
+  --accent2: #3b82f6; /* azul */
+  --danger: #ef4444;
+  --radius: 12px;
+  --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 220px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #fff;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== MAIN ===== */
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+.main-header h1 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.main-header p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===== CARDS ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.card {
+  background: var(--card);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.card p {
+  font-size: 13px;
+}
+
+.card strong {
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.btn-new {
+  font-size: 13px;
+  background: var(--accent);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #0f172a;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+.btn-new:hover {
+  background: #34d399;
+}
+
+/* ===== LISTA DE ÚLTIMOS TICKETS ===== */
+#listaUltimos {
+  margin-top: 10px;
+}
+
+#listaUltimos .ticket {
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+#listaUltimos .ticket:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#listaUltimos .ticket h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+#listaUltimos .ticket p {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+#listaUltimos .ticket span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.btn-detalles {
+  margin-top: 6px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent2);
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-detalles:hover {
+  background: #2563eb;
+}
+
+.empty {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ===== BOTÓN DETALLES ===== */
+.btn-detalles {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent2);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.btn-detalles:hover {
+  background: #2563eb; /* azul más fuerte */
+  transform: translateY(-2px);
+}
+
+.btn-detalles:active {
+  transform: scale(0.97);
+}
+

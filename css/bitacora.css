@@ -1,0 +1,240 @@
+:root {
+  --bg: #0f172a;
+  --sidebar: #111827;
+  --card: rgba(255,255,255,0.05);
+  --border: rgba(255,255,255,0.1);
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --accent1: #10b981;
+  --accent2: #3b82f6;
+  --danger: #ef4444;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Main */
+.main {
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main-header h1 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+.main-header p {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Cards */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card h2 {
+  font-size: 15px;
+  margin-bottom: 12px;
+  color: #e2e8f0;
+}
+
+/* Tabla */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.users-table th,
+.users-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.users-table th {
+  text-align: left;
+  color: var(--muted);
+  font-weight: 600;
+}
+.users-table tr:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+/* Inputs y filtros */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.filtro-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.filtro-item label {
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+  color: var(--muted);
+}
+
+.filtro-item input,
+.filtro-item select {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-size: 13px;
+  min-width: 160px;
+}
+.filtro-item input:focus,
+.filtro-item select:focus {
+  outline: none;
+  border-color: var(--accent2);
+}
+
+.filtro-acciones {
+  display: flex;
+  gap: 10px;
+}
+
+/* Botones */
+.btn-new {
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s;
+}
+.btn-new:hover { transform: scale(1.03); }
+
+.btn-secondary {
+  padding: 8px 14px;
+  background: #374151;
+  border: none;
+  border-radius: 8px;
+  color: #f3f4f6;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn-secondary:hover { background: #4b5563; }
+
+/* Sidebar footer */
+.sidebar-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Inputs y filtros */
+.filtro-item input,
+.filtro-item select {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  color: var(--text);
+  font-size: 13px;
+  min-width: 160px;
+}
+
+.filtro-item input:focus,
+.filtro-item select:focus {
+  outline: none;
+  border-color: var(--accent2);
+}
+
+/* Opciones dentro del select */
+.filtro-item select option {
+  background: var(--sidebar);
+  color: var(--text);
+}

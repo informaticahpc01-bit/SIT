@@ -1,0 +1,188 @@
+:root {
+    --bg: #0f1724;
+    --card: #0b1220;
+    --accent: #6ee7b7;
+    --muted: #94a3b8;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-2: rgba(255, 255, 255, 0.02);
+    --bg: #0f172a;
+    --sidebar: #111827;
+    --card: rgba(255, 255, 255, 0.05);
+    --border: rgba(255, 255, 255, 0.1);
+    --text: #f3f4f6;
+    --muted: #94a3b8;
+    --accent1: #10b981;
+    --accent2: #3b82f6;
+    --danger: #ef4444;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+}
+/* Sidebar */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+
+/* Main */
+.main {
+    flex: 1;
+    padding: 30px;
+}
+
+.main-header h1 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.main-header p {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+/* Cards */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.card {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+}
+
+.card h2 {
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+
+.card p {
+    font-size: 13px;
+}
+
+.card strong {
+    font-size: 18px;
+    color: var(--accent);
+}
+
+.btn-new {
+    font-size: 13px;
+    background: var(--accent);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Lista */
+#listaUltimos .ticket {
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid var(--accent);
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+}
+
+#listaUltimos .ticket strong {
+    font-size: 14px;
+}
+
+#listaUltimos .ticket span {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.empty {
+    font-size: 13px;
+    color: var(--muted);
+}

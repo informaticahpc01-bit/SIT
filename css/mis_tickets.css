@@ -1,0 +1,310 @@
+:root {
+  --bg: #0f172a;
+  --sidebar: #111827;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.1);
+  --text: #f3f4f6;
+  --muted: #94a3b8;
+  --danger: #ef4444;
+  --accent1: #10b981;
+  --accent2: #3b82f6;
+  --accent3: #facc15;
+  --radius: 14px;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* ==== Sidebar ==== */
+.sidebar {
+  background: var(--sidebar);
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 220px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.subtitle {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  font-size: 13px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.menu button:hover,
+.menu button.active {
+  background: rgba(59, 130, 246, 0.2);
+  color: #fff;
+}
+
+.btn-logout {
+  margin-top: auto;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--danger);
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.btn-logout:hover {
+  background: #dc2626;
+}
+
+/* ==== Main ==== */
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+.main-header h1 {
+  font-size: 22px;
+  margin-bottom: 5px;
+}
+
+.main-header p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+/* ==== Filtros ==== */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.filtros input,
+.filtros select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 39, 0.85);
+  color: var(--text);
+  font-size: 13px;
+  outline: none;
+  transition: border 0.2s, background 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+  border-color: var(--accent2);
+  background: rgba(31, 41, 55, 0.9);
+}
+
+.filtros input::placeholder {
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+.filtros select option {
+  background: #1f2937;
+  color: #f3f4f6;
+  padding: 8px;
+}
+
+.btn-reset {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent2);
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-reset:hover {
+  background: #2563eb;
+}
+
+/* ==== Lista de tickets ==== */
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ==== Ticket Card ==== */
+.ticket {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 240px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.ticket:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.ticket h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.ticket p {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* ==== Badges Prioridad ==== */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.badge.prioridad-baja {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+.badge.prioridad-media {
+  background: rgba(250, 204, 21, 0.15);
+  color: var(--accent3);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+.badge.prioridad-alta {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+.badge.prioridad-critica {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ==== Badges Estado ==== */
+.badge.estado.pendiente {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent2);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.badge.estado.proceso {
+  background: rgba(250, 204, 21, 0.15);
+  color: var(--accent3);
+  border: 1px solid rgba(250, 204, 21, 0.3);
+}
+
+.badge.estado.cerrado {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--accent1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+/* ==== Footer del ticket ==== */
+.ticket-footer {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ==== Botón Detalles ==== */
+.btn-detalles {
+  margin-top: 12px;
+  padding: 8px 14px;
+  background: var(--accent2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s ease;
+}
+.btn-detalles:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+
+/* ==== Mensaje vacío ==== */
+.empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  background: var(--card);
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
