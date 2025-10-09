@@ -1,17 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT - Bitácora</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-     <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-  <link rel="stylesheet" href="css/bitacora.css">
+
+  <!-- Fuente y estilos -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
+  <link rel="stylesheet" href="css/bitacora.css" />
 </head>
 
 <body>
+  <!-- Botón menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
@@ -23,7 +26,7 @@
     </div>
 
     <div class="menu">
-         <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
+      <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
       <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
       <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
       <button onclick="window.location.href='chat.html'">💬 Chat</button>
@@ -33,8 +36,9 @@
     </div>
 
     <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
+
     <div class="sidebar-footer">
-      Usuario: <span id="userName">Cargando...</span><br>
+      Usuario: <span id="userName">Cargando...</span><br />
       Sesión activa
     </div>
   </aside>
@@ -42,27 +46,24 @@
   <!-- Main -->
   <main class="main">
     <div class="main-header">
-      <div>
-        <h1>Bitácora</h1>
-        <p>Registro de actividades realizadas en el sistema</p>
-      </div>
+      <h1>Bitácora</h1>
+      <p>Registro de actividades realizadas en el sistema</p>
     </div>
 
     <!-- Filtros -->
     <div class="card">
       <h2>Filtros</h2>
       <form id="filtroForm" class="filtros">
-        <!-- Fechas -->
         <div class="filtro-item">
           <label for="fechaInicio">📅 Desde</label>
-          <input type="date" id="fechaInicio">
-        </div>
-        <div class="filtro-item">
-          <label for="fechaFin">📅 Hasta</label>
-          <input type="date" id="fechaFin">
+          <input type="date" id="fechaInicio" />
         </div>
 
-        <!-- Rango rápido -->
+        <div class="filtro-item">
+          <label for="fechaFin">📅 Hasta</label>
+          <input type="date" id="fechaFin" />
+        </div>
+
         <div class="filtro-item">
           <label for="rangoRapido">⚡ Rango rápido</label>
           <select id="rangoRapido">
@@ -75,24 +76,20 @@
           </select>
         </div>
 
-        <!-- Usuario -->
         <div class="filtro-item">
-          <label for="rangoRapido">👤 Usuarios</label>
+          <label for="usuarioFiltro">👤 Usuario</label>
           <select id="usuarioFiltro">
             <option value="">Todos</option>
           </select>
         </div>
 
-        <!-- Acción -->
         <div class="filtro-item">
-          <label for="rangoRapido">🔧 Accion</label>
+          <label for="accionFiltro">🔧 Acción</label>
           <select id="accionFiltro">
             <option value="">Todas</option>
           </select>
-
         </div>
 
-        <!-- Botones -->
         <div class="filtro-acciones">
           <button type="submit" class="btn-new">🔍 Filtrar</button>
           <button type="button" id="btnReset" class="btn-secondary">♻ Restablecer</button>
@@ -101,23 +98,32 @@
     </div>
 
     <!-- Acciones -->
-    <div style="margin:15px 0; display:flex; gap:10px;">
+    <div class="acciones">
       <button class="btn-new" id="btnExportPDF">📄 Exportar PDF</button>
     </div>
 
     <!-- Tabla -->
     <div class="card">
       <h2>Registros</h2>
-      <table class="users-table">
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Acción</th>
-            <th>Fecha</th>
-          </tr>
-        </thead>
-        <tbody id="tablaBitacora"></tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Acción</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBitacora">
+            <!-- Ejemplo -->
+            <tr>
+              <td data-label="Usuario">Admin</td>
+              <td data-label="Acción">Eliminó registro</td>
+              <td data-label="Fecha">2025-10-08</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </main>
 
@@ -126,6 +132,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <script type="module" src="js/bitacora.js"></script>
-</body>
 
+  <!-- Script menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.querySelector(".sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
+</body>
 </html>

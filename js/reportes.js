@@ -26,10 +26,38 @@ const fFinEl = document.getElementById("fechaFin");
 ============================ */
 const toDate = (v) => {
     if (!v) return null;
-    if (typeof v?.toDate === "function") return v.toDate();
+    if (typeof v?.toDate === "function") return v.toDate(); // Timestamp de Firestore
     if (v instanceof Date) return v;
-    const d = new Date(v);
-    return isNaN(d.getTime()) ? null : d;
+
+    // Si es texto tipo "7 de octubre de 2025, 10:08:55 a.m. UTC-6"
+    if (typeof v === "string") {
+        try {
+            const clean = v
+                .replace("a.m.", "AM")
+                .replace("p.m.", "PM")
+                .replace(",", "")
+                .replace("UTC-6", "-06:00")
+                .replace("de ", "")
+                .trim();
+
+            const d = new Date(clean);
+            if (!isNaN(d.getTime())) return d;
+
+            const meses = {
+                enero: 0, febrero: 1, marzo: 2, abril: 3, mayo: 4, junio: 5,
+                julio: 6, agosto: 7, septiembre: 8, octubre: 9, noviembre: 10, diciembre: 11
+            };
+            const match = clean.match(/(\d{1,2}) de (\w+) de (\d{4}).*?(\d{1,2}):(\d{2}):(\d{2})/i);
+            if (match) {
+                const [, dia, mesTxt, año, h, m, s] = match;
+                const mes = meses[mesTxt.toLowerCase()];
+                return new Date(año, mes, dia, h, m, s);
+            }
+        } catch (err) {
+            console.warn("Error al convertir fecha:", v, err);
+        }
+    }
+    return null;
 };
 
 const norm = (s) =>
@@ -101,7 +129,12 @@ function suscribirTickets() {
 function aplicarFiltro(origen = "") {
     let lista = ticketsCache
         .map((t) => ({ ...t, _estado: normEstado(t.estado) }))
-        .filter((t) => t._estado === "cerrado" && getFechaCierre(t));
+        .filter((t) => {
+            const cierre = getFechaCierre(t);
+            const creacion = getFechaCreacion(t);
+            // Solo tickets cerrados con fechas válidas de creación y cierre
+            return t._estado === "cerrado" && cierre && creacion;
+        });
 
     if (fechaInicio) lista = lista.filter((t) => getFechaCierre(t) >= fechaInicio);
     if (fechaFin) lista = lista.filter((t) => getFechaCierre(t) <= fechaFin);
@@ -147,16 +180,36 @@ function calcularMetricas(lista) {
     document.getElementById("ticketsProceso").textContent =
         ticketsCache.filter((t) => normEstado(t.estado) === "proceso").length;
 
-    const resp = lista.map((t) => (getFechaPrimerRespuesta(t) - getFechaCreacion(t)) / 60000).filter((v) => v > 0);
-    const res = lista.map((t) => (getFechaCierre(t) - getFechaCreacion(t)) / 3600000).filter((v) => v > 0);
+    let tiemposRespuesta = [];
+    let tiemposResolucion = [];
 
-    document.getElementById("promRespuesta").textContent = resp.length
-        ? (resp.reduce((a, b) => a + b, 0) / resp.length).toFixed(1) + " min"
+    lista.forEach((t) => {
+        const fCre = getFechaCreacion(t);
+        const fPri = getFechaPrimerRespuesta(t);
+        const fCie = getFechaCierre(t);
+
+        // Solo se toma si hay fecha de respuesta válida
+        if (fCre && fPri && fPri > fCre) {
+            const diffMin = (fPri - fCre) / 60000;
+            if (!isNaN(diffMin) && diffMin > 0) tiemposRespuesta.push(diffMin);
+        }
+
+        // Solo se toma si hay fecha de cierre válida
+        if (fCre && fCie && fCie > fCre) {
+            const diffHoras = (fCie - fCre) / 3600000;
+            if (!isNaN(diffHoras) && diffHoras > 0) tiemposResolucion.push(diffHoras);
+        }
+    });
+
+    const promResp = tiemposRespuesta.length
+        ? (tiemposRespuesta.reduce((a, b) => a + b, 0) / tiemposRespuesta.length).toFixed(1) + " min"
+        : "N/A";
+    const promRes = tiemposResolucion.length
+        ? (tiemposResolucion.reduce((a, b) => a + b, 0) / tiemposResolucion.length).toFixed(1) + " h"
         : "N/A";
 
-    document.getElementById("promResolucion").textContent = res.length
-        ? (res.reduce((a, b) => a + b, 0) / res.length).toFixed(1) + " h"
-        : "N/A";
+    document.getElementById("promRespuesta").textContent = promResp;
+    document.getElementById("promResolucion").textContent = promRes;
 }
 
 /* ============================
@@ -181,7 +234,7 @@ function renderTabla(lista) {
 }
 
 /* ============================
-   Gráficas (4 en total)
+   Gráficas
 ============================ */
 function renderGraficas(lista) {
     const ctxEstado = document.getElementById("chartEstado").getContext("2d");
@@ -189,7 +242,6 @@ function renderGraficas(lista) {
     const ctxResp = document.getElementById("chartRespuestaMes").getContext("2d");
     const ctxRes = document.getElementById("chartResolucionMes").getContext("2d");
 
-    // 1️⃣ Estados
     const allEstados = { pendiente: 0, proceso: 0, cerrado: 0 };
     ticketsCache.forEach((t) => { const e = normEstado(t.estado); if (e in allEstados) allEstados[e]++; });
     chartFactory("estado", ctxEstado, "doughnut", {
@@ -197,7 +249,6 @@ function renderGraficas(lista) {
         datasets: [{ data: [allEstados.pendiente, allEstados.proceso, allEstados.cerrado], backgroundColor: ["#f59e0b", "#3b82f6", "#10b981"] }]
     });
 
-    // 2️⃣ Departamentos
     const deptoCounts = {};
     lista.forEach((t) => { const d = t.departamento || "N/D"; deptoCounts[d] = (deptoCounts[d] || 0) + 1; });
     chartFactory("depto", ctxDepto, "bar", {
@@ -205,11 +256,12 @@ function renderGraficas(lista) {
         datasets: [{ label: "Tickets", data: Object.values(deptoCounts), backgroundColor: "#8b5cf6" }]
     }, axisOptions());
 
-    // 3️⃣ Promedio de Respuesta por mes
     const respByMonth = {};
     lista.forEach((t) => {
-        const fCre = getFechaCreacion(t); const fPri = getFechaPrimerRespuesta(t);
-        if (fCre && fPri) (respByMonth[monthKey(fCre)] ||= []).push((fPri - fCre) / 60000);
+        const fCre = getFechaCreacion(t);
+        const fPri = getFechaPrimerRespuesta(t);
+        if (fCre && fPri && fPri > fCre)
+            (respByMonth[monthKey(fCre)] ||= []).push((fPri - fCre) / 60000);
     });
     const respKeys = sortMonthKeys(Object.keys(respByMonth));
     chartFactory("respMes", ctxResp, "bar", {
@@ -217,11 +269,12 @@ function renderGraficas(lista) {
         datasets: [{ label: "Promedio (min)", data: respKeys.map((k) => avg(respByMonth[k])), backgroundColor: "#f59e0b" }]
     }, axisOptions("min"));
 
-    // 4️⃣ Promedio de Resolución por mes
     const resByMonth = {};
     lista.forEach((t) => {
-        const fCre = getFechaCreacion(t); const fCie = getFechaCierre(t);
-        if (fCre && fCie) (resByMonth[monthKey(fCie)] ||= []).push((fCie - fCre) / 3600000);
+        const fCre = getFechaCreacion(t);
+        const fCie = getFechaCierre(t);
+        if (fCre && fCie && fCie > fCre)
+            (resByMonth[monthKey(fCie)] ||= []).push((fCie - fCre) / 3600000);
     });
     const resKeys = sortMonthKeys(Object.keys(resByMonth));
     chartFactory("resMes", ctxRes, "bar", {
@@ -246,7 +299,7 @@ function chartFactory(key, ctx, type, data, options = { responsive: true }) {
 }
 
 /* ============================
-   Exportar PDF (solo logo + encabezado + tabla)
+   Exportar PDF
 ============================ */
 document.getElementById("btnExportPDF").addEventListener("click", async () => {
     const { jsPDF } = window.jspdf;
@@ -258,7 +311,7 @@ document.getElementById("btnExportPDF").addEventListener("click", async () => {
 
     doc.setFontSize(14).text("Hospital Puerto Cortes", pageWidth / 2, 50, { align: "center" });
     doc.setFontSize(10).text("Dirección: Puerto Cortes, Honduras", pageWidth / 2, 56, { align: "center" });
-     doc.setFontSize(12).text("Reporte de Tickets Cerrados", pageWidth / 2, 64, { align: "center" });
+    doc.setFontSize(12).text("Reporte de Tickets Cerrados", pageWidth / 2, 64, { align: "center" });
 
     const filas = [];
     document.querySelectorAll("#tablaResolucion tbody tr").forEach((tr) => {

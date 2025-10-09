@@ -5,13 +5,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT - Chat (Admin)</title>
-    <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
 
-  <link rel="stylesheet" href="css/ChatCliente.css">
+  <!-- Ícono -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/ChatCliente.css" />
 </head>
 
-<body>
+<body class="admin">
+
+  <!-- Botón de menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
   <div class="layout">
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -35,38 +41,44 @@
 
       <button id="btnLogout" class="btn-logout">Cerrar sesión</button>
       <div class="sidebar-footer">
-        Usuario: <span id="userName">Cargando...</span><br>
+        Usuario: <span id="userName">Cargando...</span><br />
         Sesión activa
       </div>
     </aside>
 
-    <!-- ===== CONTENIDO ===== -->
+    <!-- ===== CONTENIDO PRINCIPAL ===== -->
     <main class="content">
       <div class="chat-layout">
-        <!-- Slider de Tickets -->
+        <!-- Lista de tickets -->
         <aside class="tickets-slider">
           <h3>Todos los Tickets</h3>
           <div id="listaTickets" class="ticket-list"></div>
         </aside>
 
-        <!-- Panel de Chat -->
+        <!-- Panel de chat -->
         <div class="chat-panel">
           <div class="chat-header">
             <h3 id="chatTitulo">Selecciona un ticket</h3>
             <button id="btnDetalles" class="icon-btn" title="Ver detalles">❗</button>
           </div>
 
+          <!-- Caja de mensajes -->
           <div id="chatBox" class="chat-box"></div>
 
-          <!-- Área de entrada -->
+          <!-- Input de mensajes -->
           <div class="chat-input">
             <button id="btnAdjunto" title="Adjuntar imagen">📎</button>
-            <input type="file" id="fileInput" accept="image/*" hidden>
-            <input type="text" id="mensajeInput" placeholder="Escribe un mensaje y presiona Enter…" autocomplete="off">
+            <input type="file" id="fileInput" accept="image/*" hidden />
+            <input
+              type="text"
+              id="mensajeInput"
+              placeholder="Escribe un mensaje y presiona Enter…"
+              autocomplete="off"
+            />
             <button id="btnEnviar">Enviar</button>
           </div>
 
-          <!-- Preview de imágenes -->
+          <!-- Vista previa -->
           <div id="previewArea" class="preview-area"></div>
         </div>
       </div>
@@ -82,9 +94,15 @@
     <div id="detalleContenido"></div>
   </div>
 
-  <!-- Firebase config e inicialización están en js/firebase.js -->
+  <!-- Scripts -->
   <script type="module" src="js/chat.js"></script>
+
+  <!-- Menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.querySelector(".sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
 </body>
 
 </html>
-
