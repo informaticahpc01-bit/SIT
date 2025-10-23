@@ -463,3 +463,36 @@ function bloquearInputsInicial() {
   fileInput.disabled = true;
 }
 bloquearInputsInicial();
+
+
+
+
+
+btnDetalles.addEventListener("click", async () => {
+  if (!ticketSeleccionado) return;
+  detallePanel.classList.remove("hidden");
+  document.body.classList.add("detalle-abierto"); // Activa fondo oscuro
+
+  const snap = await getDoc(doc(db, "tickets", ticketSeleccionado));
+  if (!snap.exists()) {
+    detalleContenido.innerHTML = "<p>❌ Ticket no encontrado</p>";
+    return;
+  }
+  const t = snap.data();
+
+  detalleContenido.innerHTML = `
+    <div class="detalle-grid">
+      <div class="detalle-item"><h4>Asunto</h4><p>${t.asunto || "-"}</p></div>
+      <div class="detalle-item"><h4>Descripción</h4><p>${t.descripcion || "-"}</p></div>
+      <div class="detalle-item"><h4>Departamento</h4><p>${t.departamento || "-"}</p></div>
+      <div class="detalle-item"><h4>Estado</h4><p>${t.estado || "-"}</p></div>
+      <div class="detalle-item"><h4>Prioridad</h4><p>${t.prioridad || "Sin asignar"}</p></div>
+      <div class="detalle-item"><h4>Fecha</h4><p>${toDate(t.fecha)?.toLocaleString("es-HN") || "-"}</p></div>
+    </div>
+  `;
+});
+
+cerrarDetalle.addEventListener("click", () => {
+  detallePanel.classList.add("hidden");
+  document.body.classList.remove("detalle-abierto"); // Quita fondo oscuro
+});
