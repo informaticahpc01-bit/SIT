@@ -12,6 +12,7 @@
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
+/* ===== Reset ===== */
 * {
   margin: 0;
   padding: 0;
@@ -24,9 +25,10 @@ body {
   background: var(--bg);
   color: var(--text);
   font-size: 13px;
+  overflow-x: hidden;
 }
 
-/* ==== Sidebar (lo dejamos igual que en mis_tickets) ==== */
+/* ===== Sidebar ===== */
 .sidebar {
   background: var(--sidebar);
   padding: 20px 15px;
@@ -34,6 +36,8 @@ body {
   flex-direction: column;
   gap: 20px;
   min-width: 220px;
+  transition: transform 0.3s ease;
+  z-index: 1000;
 }
 
 .brand {
@@ -77,6 +81,7 @@ body {
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .menu button:hover,
 .menu button.active {
   background: rgba(59, 130, 246, 0.2);
@@ -93,12 +98,20 @@ body {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
+  transition: background 0.3s;
 }
 
-/* ==== Main ==== */
+.btn-logout:hover {
+  background: #dc2626;
+}
+
+/* ===== Main ===== */
 .main {
   flex: 1;
   padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .main h1 {
@@ -106,11 +119,12 @@ body {
   margin-bottom: 20px;
 }
 
-/* ==== Lista de tickets ==== */
+/* ===== Lista de tickets ===== */
 .list {
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* más pequeñas */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  width: 100%;
 }
 
 .ticket {
@@ -120,10 +134,11 @@ body {
   border: 1px solid var(--border);
   transition: 0.2s;
   min-height: 130px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
 .ticket:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: var(--accent2);
 }
 
@@ -145,7 +160,7 @@ body {
   color: var(--text);
 }
 
-/* ==== Estados ==== */
+/* ===== Estados ===== */
 .ticket .estado {
   display: inline-block;
   margin-top: 6px;
@@ -175,7 +190,7 @@ body {
   color: var(--danger);
 }
 
-/* ==== Botón detalles ==== */
+/* ===== Botón detalles ===== */
 .btn-detalles {
   margin-top: 8px;
   padding: 5px 10px;
@@ -192,16 +207,79 @@ body {
   background: #2563eb;
 }
 
-/* ==== Empty message ==== */
+/* ===== Vacío ===== */
 .empty {
   font-size: 12px;
   color: var(--muted);
   text-align: center;
+  margin-top: 20px;
 }
 
+/* ===== Menú móvil ===== */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  background: var(--accent2);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 20px;
+  z-index: 2000;
+}
 
-/* Diferencia: estado cerrado */
-.ticket .estado.cerrado {
-  background: rgba(34, 197, 94, 0.2);
-  color: var(--accent1);
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .main {
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main {
+    padding: 20px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .list {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 15px;
+  }
+
+  .list {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket {
+    min-height: 120px;
+  }
 }

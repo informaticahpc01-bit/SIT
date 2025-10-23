@@ -3,41 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SIT • Perfil Cliente</title>
-      <!-- logo de pa pesta;a de la pagina -->
+  <title>SIT • Perfil Tecnico</title>
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
   <link rel="stylesheet" href="css/perfil_cliente.css" />
 </head>
 <body>
+  <!-- 🔹 Botón menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
-        <div class="title">SIT - Cliente</div>
-        <div class="subtitle">Panel de usuario</div>
+        <div class="title">SIT - Tecnico</div>
+        <div class="subtitle">Panel del Tecnico</div>
       </div>
     </div>
+
     <div class="menu">
-     <button onclick="location.href='dashboard_tecnico'">📊 Dashboard</button>
+     <button onclick="location.href='dashboard_tech.html'">📊 Dashboard</button>
       <button onclick="location.href='mis_tickets.html'">🎫 Mis Tickets</button>
       <button onclick="location.href='tickets_proceso.html'">🔧 En Proceso</button>
       <button onclick="location.href='tickets_cerrados.html'">✅ Cerrados</button>
       <button onclick="location.href='chatTecnico.html'">💬 Chat</button>
       <button class="active">👤 Perfil</button>
+     
     </div>
-    <button class="btn-logout">🚪 Cerrar sesión</button>
+
+     <button id="btnLogout" class="btn-logout">🚪 Cerrar sesión</button>
   </aside>
 
+  <!-- 🔹 Main -->
   <main class="main">
     <h1>👤 Perfil del Tecnico</h1>
     <div class="perfil-card">
-      <p><b>Correo:</b> <span id="perfilCorreo">cargando...</span></p>
-      <p><b>Nombre:</b> <span id="perfilNombre">cargando...</span></p>
+      <p><b>Correo:</b> <span id="perfilCorreo">Cargando...</span></p>
+      <p><b>Nombre:</b> <span id="perfilNombre">Cargando...</span></p>
       <p><b>Rol:</b> Tecnico</p>
       <button id="btnCambiarPass" class="btn-reset">🔑 Cambiar Contraseña</button>
     </div>
   </main>
 
-  <script type="module" src="js/perfil_Tecnico.js"></script>
+  <!-- 🔔 Toasts -->
+  <div id="toastContainer"></div>
+
+  <script type="module" src="js/perfil_cliente.js"></script>
+
+  <!-- Script menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.querySelector(".sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
 </body>
 </html>

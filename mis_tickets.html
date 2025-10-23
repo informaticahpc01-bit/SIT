@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT • Mis Tickets</title>
-      <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-  <link rel="stylesheet" href="css/mis_tickets.css">
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
+  <link rel="stylesheet" href="css/mis_tickets.css" />
 </head>
 <body>
-  <!-- ==== SIDEBAR ==== -->
-  <aside class="sidebar">
+  <!-- 🔹 Botón menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -28,15 +30,15 @@
     </div>
     <button class="btn-logout">🚪 Cerrar sesión</button>
   </aside>
-  
-  <!-- ==== MAIN ==== -->
+
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <div class="main-header">
       <h1>🎫 Mis Tickets</h1>
       <p>Aquí puedes ver todos los tickets asignados a ti</p>
     </div>
 
-    <!-- 🔎 Filtros -->
+    <!-- 🔹 Filtros -->
     <div class="filtros">
       <input type="text" id="buscarTexto" placeholder="🔍 Buscar por asunto o descripción...">
 
@@ -65,17 +67,22 @@
 
       <input type="date" id="fechaInicio" style="display:none;">
       <input type="date" id="fechaFin" style="display:none;">
-
       <button id="btnReset" class="btn-reset">♻ Resetear</button>
     </div>
 
-    <!-- Contenedor de tickets -->
+    <!-- 🔹 Contenedor de tickets -->
     <div id="listaMisTickets" class="tickets-grid">
-      <p style="color:#94a3b8;">⏳ Cargando tickets...</p>
+      <p class="empty">⏳ Cargando tickets...</p>
     </div>
   </main>
 
-  <!-- JS -->
+  <!-- 🔹 Script menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.getElementById("sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
+
   <script type="module" src="js/mis_tickets.js"></script>
 </body>
 </html>

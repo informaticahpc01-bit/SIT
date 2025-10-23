@@ -4,13 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIT • Dashboard Técnico</title>
-      <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png">
   <link rel="stylesheet" href="css/dashboard_tecnico.css">
 </head>
 <body>
+  <!-- Botón menú móvil -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
   <!-- ==== SIDEBAR ==== -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -18,6 +20,7 @@
         <div class="subtitle">Panel de soporte</div>
       </div>
     </div>
+
     <div class="menu">
       <button class="active">📊 Dashboard</button>
       <button onclick="location.href='mis_tickets.html'">🎫 Mis Tickets</button>
@@ -26,6 +29,7 @@
       <button onclick="location.href='chatTecnico.html'">💬 Chat</button>
       <button onclick="location.href='perfil_Tecnico.html'">👤 Perfil</button>
     </div>
+
     <button class="btn-logout">🚪 Cerrar sesión</button>
   </aside>
 
@@ -66,7 +70,25 @@
     </div>
   </main>
 
-  <!-- ==== Importar JavaScript ==== -->
+  <!-- ==== SCRIPT ==== -->
+  <script>
+    // Control del menú lateral en móviles
+    const toggleBtn = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+
+    toggleBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    // Cerrar sidebar al hacer clic fuera en pantallas pequeñas
+    document.addEventListener("click", (e) => {
+      if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+        sidebar.classList.remove("open");
+      }
+    });
+  </script>
+
+  <!-- ==== SCRIPT FIREBASE ==== -->
   <script type="module" src="js/dashboard_tecnico.js"></script>
 </body>
 </html>

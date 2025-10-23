@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT • Tickets Cerrados</title>
-      <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-    <link rel="stylesheet" href="css/tickets_proceso.css">
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
+  <link rel="stylesheet" href="css/tickets_proceso.css" />
 </head>
 <body>
-  <!-- ==== SIDEBAR ==== -->
-  <aside class="sidebar">
+  <!-- 🔹 Botón de menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -18,6 +20,7 @@
         <div class="subtitle">Panel de soporte</div>
       </div>
     </div>
+
     <div class="menu">
       <button onclick="location.href='dashboard_tech.html'">📊 Dashboard</button>
       <button onclick="location.href='mis_tickets.html'">🎫 Mis Tickets</button>
@@ -26,14 +29,22 @@
       <button onclick="location.href='chatTecnico.html'">💬 Chat</button>
       <button onclick="location.href='perfil_Tecnico.html'">👤 Perfil</button>
     </div>
+
     <button class="btn-logout">🚪 Cerrar sesión</button>
   </aside>
 
-  <!-- ==== MAIN ==== -->
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <h1>✅ Tickets Cerrados</h1>
     <div id="listaTickets" class="list"></div>
   </main>
+
+  <!-- 🔹 Script para menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.getElementById("sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
 
   <script type="module" src="js/tickets_cerrados.js"></script>
 </body>

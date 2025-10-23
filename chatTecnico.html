@@ -2,18 +2,20 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT • Chat Técnico</title>
-      <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-  <link rel="stylesheet" href="css/ChatCliente.css">
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
+  <link rel="stylesheet" href="css/ChatCliente.css" />
 </head>
 
 <body>
+  <!-- 🔹 Botón menú móvil -->
+  <button id="toggleMenu" class="menu-toggle">☰</button>
+
   <div class="layout">
-    <!-- Sidebar -->
-    <aside class="sidebar">
+    <!-- 🔹 Sidebar -->
+    <aside class="sidebar" id="sidebar">
       <div class="brand">
         <div class="logo">SIT</div>
         <div>
@@ -32,47 +34,33 @@
       </div>
 
       <button class="btn-logout" id="btnLogout">🚪 Cerrar sesión</button>
-      <div class="sidebar-footer">
-        Usuario: <span id="userName">Cargando...</span>
-      </div>
-    </aside>
+       </aside>
 
-    <!-- ===== CONTENIDO ===== -->
+    <!-- 🔹 Contenido principal -->
     <main class="content">
       <div class="chat-layout">
-        <!-- Slider de Tickets -->
+        <!-- Tickets -->
         <aside class="tickets-slider">
           <h3>Tickets Pendientes / En Proceso</h3>
           <div id="listaTickets" class="ticket-list"></div>
         </aside>
 
-        <!-- Panel de Chat -->
+        <!-- Panel de chat -->
         <div class="chat-panel">
           <div class="chat-header">
             <h3 id="chatTitulo">Selecciona un ticket</h3>
             <button id="btnDetalles" class="icon-btn" title="Ver detalles">❗</button>
           </div>
 
-          <!-- Caja de mensajes -->
           <div id="chatBox" class="chat-box"></div>
-
-          <!-- Indicador escribiendo -->
           <div id="typingBox" class="typing-box"></div>
 
-          <!-- Área de previsualización de adjuntos -->
           <div id="previewArea" class="preview-area"></div>
 
-          <!-- Input de mensajes -->
           <div class="chat-input">
             <input type="text" id="mensajeInput" placeholder="Escribe un mensaje y presiona Enter…">
-
-            <!-- Input oculto para adjuntos -->
             <input type="file" id="fileInput" style="display:none" />
-
-            <!-- Botón de adjuntar -->
             <button id="btnAdjunto" title="Adjuntar archivo">📎</button>
-
-            <!-- Botón de enviar -->
             <button id="btnEnviar">Enviar</button>
           </div>
         </div>
@@ -89,7 +77,12 @@
     <div id="detalleContenido"></div>
   </div>
 
-  <script type="module" src="js/chatTecnico.js"></script>
+  <!-- Script menú móvil -->
+  <script>
+    const toggle = document.getElementById("toggleMenu");
+    const sidebar = document.getElementById("sidebar");
+    toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
+  </script>
 </body>
 
 </html>
