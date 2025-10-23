@@ -13,11 +13,11 @@
 }
 
 /* ===== RESET ===== */
-body {
+html, body {
+  height: 100%;
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -26,7 +26,7 @@ body {
 .layout {
   display: grid;
   grid-template-columns: 240px 1fr;
-  height: 100vh;
+  height: 100%;
 }
 
 /* ===== SIDEBAR ===== */
@@ -45,6 +45,7 @@ body {
   align-items: center;
   gap: 10px;
 }
+
 .logo {
   width: 36px;
   height: 36px;
@@ -56,6 +57,7 @@ body {
   color: #fff;
   font-weight: 700;
 }
+
 .menu button {
   display: flex;
   align-items: center;
@@ -69,11 +71,13 @@ body {
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .menu button:hover,
 .menu button.active {
   background: rgba(59, 130, 246, 0.25);
   color: #fff;
 }
+
 .btn-logout {
   background: var(--danger);
   color: #fff;
@@ -86,39 +90,93 @@ body {
 }
 .btn-logout:hover { background: #dc2626; }
 
-/* ===== CONTENIDO ===== */
+/* ===== CONTENIDO PRINCIPAL ===== */
 .content {
   display: flex;
   flex-direction: column;
   padding: 20px;
 }
 
-/* ===== CHAT ===== */
+/* ===== CHAT LAYOUT ===== */
 .chat-layout {
   display: flex;
+  flex-direction: row;
   gap: 20px;
   flex: 1;
-  height: calc(100vh - 60px);
+  min-height: calc(100vh - 60px);
+  overflow: hidden;
 }
+
+/* ===== LISTA DE TICKETS ===== */
 .tickets-slider {
   width: 280px;
   background: var(--card);
   border-radius: var(--radius);
   padding: 15px;
   overflow-y: auto;
+  color: var(--text);
   box-shadow: var(--shadow);
+  position: relative;
+  z-index: 10;
 }
+
 .ticket-item {
   background: #1e293b;
+  color: var(--text);
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 8px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s;
 }
-.ticket-item:hover { background: #334155; }
-.ticket-item.active { background: #2563eb; }
 
+.ticket-item:hover {
+  background: #334155;
+  transform: scale(1.01);
+}
+
+.ticket-item.active {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+}
+
+.ticket-item.cerrado {
+  opacity: 0.6;
+}
+
+.ticket-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.ticket-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.badge {
+  background: var(--accent2);
+  color: #fff;
+  border-radius: 12px;
+  padding: 2px 6px;
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.tag-cerrado {
+  background: var(--danger);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+/* ===== PANEL DE CHAT ===== */
 .chat-panel {
   flex: 1;
   display: flex;
@@ -127,7 +185,10 @@ body {
   border-radius: var(--radius);
   padding: 16px;
   box-shadow: var(--shadow);
+  position: relative;
+  z-index: 5;
 }
+
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -135,6 +196,7 @@ body {
   margin-bottom: 10px;
   font-weight: 600;
 }
+
 .chat-box {
   flex: 1;
   overflow-y: auto;
@@ -152,6 +214,7 @@ body {
   from { opacity: 0; transform: translateY(5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 .user .msg-bubble {
   background: #10b981;
   color: #fff;
@@ -168,13 +231,20 @@ body {
   max-width: 70%;
 }
 
-/* ===== INPUT ===== */
+.msg-meta {
+  font-size: 11px;
+  text-align: right;
+  opacity: 0.8;
+}
+
+/* ===== INPUT CHAT ===== */
 .chat-input {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 10px;
 }
+
 .chat-input input[type="text"] {
   flex: 1;
   padding: 10px 12px;
@@ -184,6 +254,7 @@ body {
   color: var(--text);
   font-size: 14px;
 }
+
 .chat-input button {
   background: var(--accent2);
   color: #fff;
@@ -196,6 +267,18 @@ body {
 }
 .chat-input button:hover { background: #2563eb; }
 
+.preview-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.preview-img {
+  max-height: 80px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+
 /* ===== TOASTS ===== */
 #toastContainer {
   position: fixed;
@@ -206,6 +289,7 @@ body {
   gap: 10px;
   z-index: 3000;
 }
+
 .toast {
   padding: 12px 18px;
   border-radius: 8px;
@@ -222,13 +306,14 @@ body {
 .toast.error { background: var(--danger); }
 .toast.info { background: var(--accent2); }
 .toast.warning { background: #f59e0b; }
+
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateY(-20px); }
   10%, 90% { opacity: 1; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(-20px); }
 }
 
-/* ===== RESPONSIVE ===== */
+/* ===== BOTÓN MENU MÓVIL ===== */
 .menu-toggle {
   display: none;
   position: fixed;
@@ -242,9 +327,12 @@ body {
   font-size: 20px;
   z-index: 2000;
 }
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
   .layout { grid-template-columns: 200px 1fr; }
 }
+
 @media (max-width: 768px) {
   .layout { grid-template-columns: 1fr; }
   .menu-toggle { display: block; }
@@ -261,6 +349,7 @@ body {
   .tickets-slider { width: 100%; order: 2; }
   .chat-panel { order: 1; height: 70vh; }
 }
+
 @media (max-width: 480px) {
   .chat-input input[type="text"] { width: 100%; font-size: 13px; }
   .chat-input button { flex: 1; font-size: 13px; padding: 8px; }
