@@ -354,3 +354,141 @@ html, body {
   .chat-input input[type="text"] { width: 100%; font-size: 13px; }
   .chat-input button { flex: 1; font-size: 13px; padding: 8px; }
 }
+
+/* ===== USUARIO OCULTO ===== */
+#userName {
+  display: none;
+}
+
+/* ===== PANEL DE DETALLES ===== */
+.detalle-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100vh;
+  background: var(--card);
+  color: var(--text);
+  border-left: 1px solid var(--border, rgba(255,255,255,0.1));
+  box-shadow: var(--shadow);
+  padding: 20px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+  z-index: 1200;
+}
+
+.detalle-panel:not(.hidden) {
+  transform: translateX(0);
+}
+
+.detalle-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.detalle-header h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.detalle-header button {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 18px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.detalle-header button:hover {
+  color: var(--danger);
+}
+
+.detalle-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.detalle-item {
+  background: #1e293b;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.detalle-item h4 {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.detalle-item p {
+  font-size: 14px;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ===== RESPONSIVE PANEL DETALLES ===== */
+@media (max-width: 1024px) {
+  .detalle-panel {
+    width: 320px;
+  }
+}
+
+@media (max-width: 768px) {
+  .detalle-panel {
+    width: 100%;
+    height: 100%;
+    border-left: none;
+    border-top: 1px solid var(--border, rgba(255,255,255,0.1));
+    box-shadow: none;
+    padding: 15px;
+  }
+
+  .detalle-header h3 {
+    font-size: 15px;
+  }
+
+  .detalle-item {
+    padding: 8px 10px;
+  }
+
+  .detalle-item h4 {
+    font-size: 12px;
+  }
+
+  .detalle-item p {
+    font-size: 13px;
+  }
+}
+
+/* ===== MODO ULTRA COMPACTO (TELÉFONOS PEQUEÑOS) ===== */
+@media (max-width: 480px) {
+  .detalle-panel {
+    padding: 10px;
+  }
+
+  .detalle-header h3 {
+    font-size: 14px;
+  }
+
+  .detalle-item {
+    padding: 6px 8px;
+    border-radius: 8px;
+  }
+
+  .detalle-item h4 {
+    font-size: 11.5px;
+  }
+
+  .detalle-item p {
+    font-size: 12.5px;
+    line-height: 1.3;
+  }
+}
