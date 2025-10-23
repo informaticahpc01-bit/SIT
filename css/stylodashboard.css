@@ -19,6 +19,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+html, body { height: 100%; }
+
 body {
     margin: 0;
     display: grid;
@@ -26,6 +28,7 @@ body {
     height: 100vh;
     background: linear-gradient(180deg, #061022 0%, #071428 100%);
     color: #e6eef6;
+    overflow: hidden; /* para evitar doble scroll al usar sidebar fija en móvil */
 }
 
 /* Sidebar */
@@ -35,6 +38,8 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  will-change: transform;
+  z-index: 1000; /* por encima del contenido cuando es móvil */
 }
 
 .brand {
@@ -64,6 +69,12 @@ body {
   color: var(--muted);
 }
 
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
 .menu button {
   display: flex;
   align-items: center;
@@ -75,7 +86,7 @@ body {
   font-size: 13px;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background 0.3s, color 0.3s;
 }
 .menu button:hover,
 .menu button.active {
@@ -85,7 +96,7 @@ body {
 
 .btn-logout {
   margin-top: auto;
-  padding: 8px 12px;
+  padding: 10px 12px;
   border: none;
   border-radius: 8px;
   background: var(--danger);
@@ -93,8 +104,25 @@ body {
   cursor: pointer;
   font-size: 13px;
   font-weight: 600;
+  min-height: 40px;
 }
 
+/* Sidebar footer */
+.sidebar-footer {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Overlay (para cerrar sidebar en móvil) */
+.overlay {
+  display: none; /* se activa en móvil cuando sidebar está abierta */
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.5);
+  backdrop-filter: blur(1px);
+  z-index: 900;
+}
 
 /* Main */
 .main {
@@ -109,6 +137,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
+    flex-wrap: wrap; /* para que el título y acciones no se desborden en pantallas pequeñas */
 }
 
 .main-header h1 {
@@ -119,6 +149,7 @@ body {
 .main-header p {
     font-size: 13px;
     color: #94a3b8;
+    margin-top: 2px;
 }
 
 .main-header .actions {
@@ -136,14 +167,25 @@ body {
     font-size: 13px;
 }
 
-.btn-new {
-    padding: 8px 12px;
-    background: linear-gradient(135deg, #10b981, #3b82f6);
+.btn-new,
+.btn-menu {
+    padding: 10px 12px;
     border: none;
     border-radius: 8px;
     color: white;
     font-size: 13px;
     cursor: pointer;
+    min-height: 40px; /* tamaño táctil */
+}
+
+.btn-new {
+    background: linear-gradient(135deg, #10b981, #3b82f6);
+}
+
+.btn-menu {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    display: none; /* visible solo en móvil */
 }
 
 /* Cards */
@@ -159,6 +201,7 @@ body {
     border-radius: 12px;
     box-shadow: 0 6px 18px rgba(2, 6, 23, 0.6);
     border: 1px solid rgba(255, 255, 255, 0.02);
+    min-width: 0; /* evita overflow en grid */
 }
 
 .card h2 {
@@ -174,7 +217,7 @@ body {
     margin: 5px 0;
 }
 
-
+/* Tickets */
 .ticket-card {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -190,6 +233,7 @@ body {
 .ticket-card a {
     color: #3b82f6;
     text-decoration: none;
+    word-break: break-word; /* evita desbordes de URLs largas */
 }
 
 .ticket-card a:hover {
@@ -200,6 +244,7 @@ body {
     padding: 4px 8px;
     border-radius: 8px;
     font-size: 12px;
+    white-space: nowrap;
 }
 
 /* Estado Pendiente o Abierto */
@@ -209,8 +254,8 @@ body {
     color: #f97316;
 }
 
-/* Estado En proceso */
-.badge.e\n-proceso {
+/* Estado En proceso (corrección del selector, sin cambiar diseño) */
+.badge.en-proceso {
     background: rgba(59, 130, 246, 0.2);
     color: #3b82f6;
 }
@@ -221,9 +266,133 @@ body {
     color: #22c55e;
 }
 
-/* Sidebar footer */
-.sidebar-footer {
-  margin-top: 20px;
-  font-size: 12px;
-  color: var(--muted);
+/* Grilla base (escritorio) */
+@media (min-width: 1025px) {
+  body {
+    grid-template-columns: 260px 1fr;
+  }
+}
+
+/* Tablet: ajustar tipografías y grilla */
+@media (max-width: 1024px) {
+  body {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .main {
+    padding: 24px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+/* Móvil: sidebar superpuesta + una sola columna */
+@media (max-width: 768px) {
+  body {
+    grid-template-columns: 1fr; /* una columna: el main ocupa todo */
+    overflow: hidden;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 78%;
+    max-width: 320px;
+    transform: translateX(-100%);
+    transition: transform 0.28s ease;
+    box-shadow: 0 10px 30px rgba(3, 7, 18, 0.6);
+  }
+
+  /* cuando abrimos el menú */
+  .sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .overlay {
+    display: block;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .sidebar-open .overlay {
+    opacity: 1;
+  }
+
+  .main {
+    padding: 20px 16px;
+  }
+
+  .main-header {
+    gap: 10px;
+  }
+
+  .main-header h1 {
+    font-size: 17px;
+  }
+
+  .main-header p {
+    font-size: 12px;
+  }
+
+  .btn-menu {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-new {
+    font-size: 13px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr; /* tarjetas en una columna */
+    gap: 14px;
+  }
+
+  /* Para evitar desbordes de contenido */
+  .card, .ticket-card {
+    overflow: hidden;
+  }
+}
+
+/* Móvil pequeño */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 86%;
+  }
+
+  .main {
+    padding: 18px 14px;
+  }
+
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .main-header .actions {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn-new, .btn-menu {
+    width: auto; /* botones alineados */
+  }
+}
+
+/* Accesibilidad mínima: foco visible */
+:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.8);
+  outline-offset: 2px;
+}
+
+/* Canvas responsivo (para Chart.js) */
+canvas {
+  max-width: 100% !important;
+  height: auto !important;
+  display: block;
 }

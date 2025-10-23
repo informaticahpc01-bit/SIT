@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT • Chat Cliente</title>
-
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-  <link rel="stylesheet" href="css/ChatCliente.css">
+  <link rel="stylesheet" href="css/ChatCliente.css" />
 </head>
-
 <body>
-  <!-- Botón de menú móvil -->
+  <!-- 🔹 Botón menú móvil -->
   <button id="toggleMenu" class="menu-toggle">☰</button>
 
   <div class="layout">
-    <!-- Sidebar -->
+    <!-- 🔹 Sidebar -->
     <aside class="sidebar">
       <div class="brand">
         <div class="logo">SIT</div>
@@ -26,20 +23,20 @@
       </div>
 
       <div class="menu">
-        <button onclick="window.location.href='dashboard_cliente.html'">📊 Dashboard</button>
-        <button onclick="window.location.href='mis_tickets_cliente.html'">🎫 Mis Tickets</button>
-        <button onclick="window.location.href='nuevo_ticket_cliente.html'">➕ Nuevo Ticket</button>
+        <button onclick="location.href='dashboard_cliente.html'">📊 Dashboard</button>
+        <button onclick="location.href='mis_tickets_cliente.html'">🎫 Mis Tickets</button>
+        <button onclick="location.href='nuevo_ticket_cliente.html'">➕ Nuevo Ticket</button>
         <button class="active">💬 Chat</button>
-        <button onclick="window.location.href='perfil_cliente.html'">👤 Perfil</button>
+        <button onclick="location.href='perfil_cliente.html'">👤 Perfil</button>
+        <button class="btn-logout" id="btnLogout">🚪 Cerrar sesión</button>
       </div>
 
-      <button class="btn-logout" id="btnLogout">🚪 Cerrar sesión</button>
       <div class="sidebar-footer">
         Usuario: <span id="userName">Cargando...</span>
       </div>
     </aside>
 
-    <!-- Contenido -->
+    <!-- 🔹 Contenido -->
     <main class="content">
       <div class="chat-layout">
         <!-- Lista de tickets -->
@@ -56,7 +53,6 @@
           </div>
 
           <div id="chatBox" class="chat-box"></div>
-
           <div id="typingBox" class="typing-box"></div>
 
           <div class="chat-input">
@@ -64,14 +60,14 @@
             <input type="text" id="mensajeInput" placeholder="Escribe un mensaje y presiona Enter…">
             <input type="file" id="fileInput" style="display:none" />
             <button id="btnAdjunto" title="Adjuntar archivo">📎</button>
-            <button id="btnEnviar">Enviar</button>
+            <button id="btnEnviar" class="btn-enviar">📩 Enviar</button>
           </div>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- Panel lateral de detalles -->
+  <!-- Panel lateral -->
   <div id="detallePanel" class="detalle-panel hidden">
     <div class="detalle-header">
       <h3>Detalles del Ticket</h3>
@@ -80,15 +76,15 @@
     <div id="detalleContenido"></div>
   </div>
 
-  <!-- JS -->
-  <script type="module" src="js/chat_cliente.js"></script>
+  <!-- Toasts -->
+  <div id="toastContainer"></div>
 
-  <!-- Menú móvil -->
+  <!-- Scripts -->
+  <script type="module" src="js/chat_cliente.js"></script>
   <script>
     const toggle = document.getElementById("toggleMenu");
     const sidebar = document.querySelector(".sidebar");
     toggle.addEventListener("click", () => sidebar.classList.toggle("open"));
   </script>
 </body>
-
 </html>

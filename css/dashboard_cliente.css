@@ -5,9 +5,9 @@
   --border: rgba(255, 255, 255, 0.1);
   --text: #f3f4f6;
   --muted: #94a3b8;
-  --accent: #6ee7b7; /* tono cliente */
-  --accent1: #10b981; /* verde */
-  --accent2: #3b82f6; /* azul */
+  --accent: #6ee7b7;
+  --accent1: #10b981;
+  --accent2: #3b82f6;
   --danger: #ef4444;
   --radius: 12px;
   --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -39,9 +39,11 @@ body {
   min-width: 220px;
 }
 
+/* ===== BRAND ===== */
 .brand {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -67,6 +69,28 @@ body {
   color: var(--muted);
 }
 
+/* 🔹 Botón menú hamburguesa */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.menu-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* ===== MENU ===== */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
 .menu button {
   display: flex;
   align-items: center;
@@ -80,38 +104,33 @@ body {
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .menu button:hover,
 .menu button.active {
   background: rgba(59, 130, 246, 0.2);
   color: #fff;
 }
 
+/* 🔴 Botón rojo dentro del menú */
 .btn-logout {
-  margin-top: auto;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 8px;
   background: var(--danger);
   color: white;
-  cursor: pointer;
-  font-size: 13px;
   font-weight: 600;
+  text-align: center;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-logout:hover {
+  background: #dc2626;
 }
 
 /* ===== MAIN ===== */
 .main {
   flex: 1;
   padding: 30px;
-}
-
-.main-header h1 {
-  font-size: 22px;
-  margin-bottom: 5px;
-}
-
-.main-header p {
-  font-size: 13px;
-  color: var(--muted);
 }
 
 /* ===== CARDS ===== */
@@ -129,121 +148,71 @@ body {
   box-shadow: var(--shadow);
   transition: 0.3s;
 }
-
 .card:hover {
   transform: translateY(-4px);
 }
 
-.card h2 {
-  font-size: 16px;
-  margin-bottom: 6px;
+/* ===== RESPONSIVE ===== */
+
+/* --- Tablets (≤1024px) --- */
+@media (max-width: 1024px) {
+  body {
+    flex-direction: column;
+  }
+  .sidebar {
+    flex-direction: column;
+    min-width: 100%;
+    padding: 15px;
+  }
+  .main {
+    padding: 20px;
+  }
 }
 
-.card p {
-  font-size: 13px;
+/* --- Móviles horizontales (≤768px) --- */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .menu.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+
+  .menu button {
+    width: 100%;
+    text-align: left;
+  }
+
+  .btn-logout {
+    width: 100%;
+    margin-top: 8px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.card strong {
-  font-size: 18px;
-  color: var(--accent);
+/* --- Móviles verticales (≤480px) --- */
+@media (max-width: 480px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .main {
+    padding: 15px;
+  }
 }
-
-.btn-new {
-  font-size: 13px;
-  background: var(--accent);
-  border: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  color: #0f172a;
-  font-weight: 600;
-  transition: background 0.3s;
-}
-.btn-new:hover {
-  background: #34d399;
-}
-
-/* ===== LISTA DE ÚLTIMOS TICKETS ===== */
-#listaUltimos {
-  margin-top: 10px;
-}
-
-#listaUltimos .ticket {
-  background: rgba(255, 255, 255, 0.05);
-  border-left: 4px solid var(--accent);
-  padding: 12px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-
-#listaUltimos .ticket:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-#listaUltimos .ticket h3 {
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: #fff;
-}
-
-#listaUltimos .ticket p {
-  font-size: 12px;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-
-#listaUltimos .ticket span {
-  font-size: 12px;
-  color: var(--muted);
-}
-
-.btn-detalles {
-  margin-top: 6px;
-  padding: 5px 10px;
-  border: none;
-  border-radius: 6px;
-  background: var(--accent2);
-  color: white;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.btn-detalles:hover {
-  background: #2563eb;
-}
-
-.empty {
-  font-size: 13px;
-  color: var(--muted);
-  text-align: center;
-  margin-top: 10px;
-}
-
-/* ===== BOTÓN DETALLES ===== */
-.btn-detalles {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 8px 14px;
-  border: none;
-  border-radius: 8px;
-  background: var(--accent2);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
-
-.btn-detalles:hover {
-  background: #2563eb; /* azul más fuerte */
-  transform: translateY(-2px);
-}
-
-.btn-detalles:active {
-  transform: scale(0.97);
-}
-

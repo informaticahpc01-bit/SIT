@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT • Nuevo Ticket</title>
-      <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
   <link rel="stylesheet" href="css/nuevo_ticket_cliente.css" />
 </head>
+
 <body>
+  <!-- ==== SIDEBAR ==== -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
@@ -16,32 +18,51 @@
         <div class="title">SIT - Cliente</div>
         <div class="subtitle">Panel de usuario</div>
       </div>
+      <button id="menuToggle" class="menu-toggle">☰</button>
     </div>
-    <div class="menu">
+
+    <div class="menu" id="menuLinks">
       <button onclick="location.href='dashboard_cliente.html'">📊 Dashboard</button>
       <button onclick="location.href='mis_tickets_cliente.html'">🎫 Mis Tickets</button>
       <button class="active">➕ Nuevo Ticket</button>
       <button onclick="location.href='chat_cliente.html'">💬 Chat</button>
       <button onclick="location.href='perfil_cliente.html'">👤 Perfil</button>
+      <button class="btn-logout">🚪 Cerrar sesión</button>
     </div>
-    <button class="btn-logout">🚪 Cerrar sesión</button>
   </aside>
 
+  <!-- ==== MAIN ==== -->
   <main class="main">
     <h1>➕ Crear Nuevo Ticket</h1>
+
     <form id="formNuevoTicket" class="form">
       <input type="text" id="asunto" placeholder="Asunto" required />
       <textarea id="descripcion" placeholder="Descripción detallada" rows="5" required></textarea>
-      <select id="departamento">
+
+      <select id="departamento" required>
         <option value="">Seleccione departamento</option>
         <option value="IT">IT</option>
         <option value="Soporte">Soporte</option>
         <option value="Administración">Administración</option>
       </select>
-       <button type="submit" class="btn-reset">📩 Enviar</button>
+
+      <button type="submit" class="btn-enviar">📩 Enviar Ticket</button>
     </form>
+
+    <!-- Contenedor de mensajes toast -->
+    <div id="toastContainer"></div>
   </main>
 
   <script type="module" src="js/nuevo_ticket_cliente.js"></script>
+
+  <!-- Script menú -->
+  <script>
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menuLinks');
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('show');
+      toggle.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    });
+  </script>
 </body>
 </html>

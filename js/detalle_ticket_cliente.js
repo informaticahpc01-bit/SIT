@@ -16,9 +16,7 @@ import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/fi
 /* ==== DOM ==== */
 const detalleTicket = document.getElementById("detalleTicket");
 const btnVolver = document.getElementById("btnVolver");
-
 const listaComentarios = document.getElementById("listaComentarios");
-const btnReimprimir = document.getElementById("btnReimprimir");
 
 /* Estado */
 let ticketId = null;
@@ -45,9 +43,9 @@ function formatFecha(v) {
 function estadoColor(estado = "") {
   estado = estado.toLowerCase();
   if (estado === "pendiente") return [59, 130, 246]; // azul
-  if (estado === "proceso") return [250, 204, 21]; // amarillo
-  if (estado === "cerrado") return [16, 185, 129]; // verde
-  return [239, 68, 68]; // rojo / eliminado
+  if (estado === "proceso") return [250, 204, 21];   // amarillo
+  if (estado === "cerrado") return [16, 185, 129];   // verde
+  return [239, 68, 68];                              // rojo / eliminado
 }
 
 /* ===== Sesión ===== */
@@ -68,7 +66,7 @@ onAuthStateChanged(auth, async (user) => {
   cargarComentarios(ticketId);
 });
 
-/* ===== Cargar ticket ===== */
+/* ===== Cargar detalle del ticket ===== */
 async function cargarDetalle(id) {
   try {
     const snap = await getDoc(doc(db, "tickets", id));
@@ -80,26 +78,34 @@ async function cargarDetalle(id) {
     ticketData = { id, ...snap.data() };
     const t = ticketData;
 
+    // 🎨 Estructura visual coherente con el dashboard
     detalleTicket.innerHTML = `
-      <div class="ticket-detalle">
-        <h2>${t.asunto || "Sin asunto"}</h2>
-        <p>${t.descripcion || "Sin descripción"}</p>
-        <p><b>Departamento:</b> ${t.departamento || "-"}</p>
-        <p><b>Prioridad:</b> ${t.prioridad || "-"}</p>
-        <p><b>Estado:</b> ${t.estado || "-"}</p>
-        <p><b>Asignado a:</b> ${t.tecnicoAsignado || "-"}</p>
-        <p><b>Fecha:</b> ${formatFecha(t.fecha)}</p>
-        ${t.solucion ? `<p><b>Solución:</b> ${t.solucion}</p>` : ""}
+      <div class="detalle-card ticket-detalle">
+        <div class="ticket-header">
+          <h2>${t.asunto || "Sin asunto"}</h2>
+          <span class="estado ${t.estado?.toLowerCase() || ""}">
+            ${t.estado || "—"}
+          </span>
+        </div>
+        <div class="ticket-body">
+          <p><strong>Descripción:</strong> ${t.descripcion || "Sin descripción"}</p>
+          <p><strong>Departamento:</strong> ${t.departamento || "-"}</p>
+          <p><strong>Prioridad:</strong> ${t.prioridad || "-"}</p>
+          <p><strong>Asignado a:</strong> ${t.tecnicoAsignado || "-"}</p>
+          <p><strong>Fecha:</strong> ${formatFecha(t.fecha)}</p>
+          ${t.solucion ? `<p><strong>Solución:</strong> ${t.solucion}</p>` : ""}
+        </div>
+        <div class="ticket-footer">
+          <button id="btnReimprimir" class="btn-detalles">🖨️ Reimprimir Ticket</button>
+        </div>
       </div>
-      <button id="btnReimprimir">🖨️ Reimprimir Ticket</button>
     `;
 
-    // Activar impresión
+    // ✅ Activar impresión PDF
     document.getElementById("btnReimprimir").addEventListener("click", async () => {
       const comentarios = [];
       const snapCom = await getDocs(collection(db, "tickets", ticketId, "comentarios"));
       snapCom.forEach((docSnap) => comentarios.push(docSnap.data()));
-
       await generarPDFTicket(t, t.solucion || "", comentarios);
     });
   } catch (err) {
@@ -108,7 +114,7 @@ async function cargarDetalle(id) {
   }
 }
 
-/* ===== Comentarios ===== */
+/* ===== Cargar comentarios en vivo ===== */
 function cargarComentarios(id) {
   const qRef = query(
     collection(db, "tickets", id, "comentarios"),
@@ -121,18 +127,21 @@ function cargarComentarios(id) {
       listaComentarios.innerHTML = `<p class="empty">Sin comentarios aún</p>`;
       return;
     }
+
     snap.forEach((docSnap) => {
       const c = docSnap.data();
       const div = document.createElement("div");
       div.className = "comentario";
-      div.innerHTML = `<p><b>${c.usuario}</b>: ${c.texto}</p>
-                       <small>${formatFecha(c.fecha)}</small>`;
+      div.innerHTML = `
+        <p><b>${c.usuario}</b>: ${c.texto}</p>
+        <small>${formatFecha(c.fecha)}</small>
+      `;
       listaComentarios.appendChild(div);
     });
   });
 }
 
-/* ===== PDF ===== */
+/* ===== Generar PDF ===== */
 async function generarPDFTicket(t, solucionTexto, comentarios = []) {
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p", "mm", "a4");
@@ -145,13 +154,13 @@ async function generarPDFTicket(t, solucionTexto, comentarios = []) {
   // Encabezado
   doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
-  doc.text("SIT - SISTEMA INTELIGENTE DE TICKETS", pageWidth / 2, 15, { align: "center" });
+  doc.text("SISTEMA INTELIGENTE DE TICKETS (SIT)", pageWidth / 2, 15, { align: "center" });
   doc.setFontSize(11);
   doc.text("Puerto Cortés, Honduras", pageWidth / 2, 22, { align: "center" });
   doc.setFontSize(12);
-  doc.text(`TICKET N° ${t.numero ?? t.id}`, pageWidth / 2, 30, { align: "center" });
+  doc.text(`Ticket N° ${t.numero ?? t.id}`, pageWidth / 2, 30, { align: "center" });
 
-  // Datos del solicitante
+  // Datos básicos
   const filas1 = [
     ["Fecha", formatFecha(t.fecha)],
     ["Departamento", t.departamento || "-"],
@@ -170,22 +179,22 @@ async function generarPDFTicket(t, solucionTexto, comentarios = []) {
     margin: { left: 10, right: 10 }
   });
 
-  // Estado con color
+  // Estado
   const [r, g, b] = estadoColor(t.estado);
   doc.setTextColor(r, g, b);
   doc.setFontSize(12);
   doc.text(`Estado: ${t.estado || "-"}`, 20, doc.lastAutoTable.finalY + 10);
   doc.setTextColor(0, 0, 0);
 
-  // Datos de mantenimiento
-  const ahora = new Date();
+  // Solución o mantenimiento
   const filas2 = [
     ["Inicio", "-"],
-    ["Fin", ahora.toLocaleString("es-HN")],
-    ["Observaciones / Solución", (solucionTexto || "-").replace(/\s+/g, " ")]
+    ["Fin", new Date().toLocaleString("es-HN")],
+    ["Solución / Observaciones", (solucionTexto || "-").replace(/\s+/g, " ")]
   ];
 
   doc.autoTable({
+    startY: doc.lastAutoTable.finalY + 15,
     head: [["Datos de mantenimiento", ""]],
     body: filas2,
     theme: "grid",
@@ -203,6 +212,7 @@ async function generarPDFTicket(t, solucionTexto, comentarios = []) {
     ]);
 
     doc.autoTable({
+      startY: doc.lastAutoTable.finalY + 15,
       head: [["Usuario / Fecha", "Comentario"]],
       body: filasComentarios,
       theme: "grid",
@@ -219,14 +229,14 @@ async function generarPDFTicket(t, solucionTexto, comentarios = []) {
   doc.line(20, y, mid - 10, y);
   doc.line(mid + 10, y, pageWidth - 20, y);
   doc.setFontSize(10);
-  doc.text("Firma Responsable de Mantenimiento", (20 + mid - 10) / 2, y + 6, { align: "center" });
+  doc.text("Firma Responsable", (20 + mid - 10) / 2, y + 6, { align: "center" });
   doc.text("Firma del Solicitante", (mid + 10 + pageWidth - 20) / 2, y + 6, { align: "center" });
 
   // Pie
   doc.setFontSize(9);
-  doc.text("Generado por SIT • " + ahora.toLocaleString("es-HN"), pageWidth / 2, 287, { align: "center" });
+  doc.text("Generado por SIT • " + new Date().toLocaleString("es-HN"), pageWidth / 2, 287, { align: "center" });
 
-  doc.save(`ticket_${t.numero ?? t.id}_cierre.pdf`);
+  doc.save(`ticket_${t.numero ?? t.id}_detalle.pdf`);
 }
 
 function toBase64(url) {

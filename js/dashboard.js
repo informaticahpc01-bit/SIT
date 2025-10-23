@@ -1,4 +1,7 @@
-// js/dashboard.js
+// ======================================================
+// SIT - DASHBOARD PRINCIPAL
+// ======================================================
+
 import { auth, db } from "./firebase.js";
 import { signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 import {
@@ -8,6 +11,7 @@ import {
   onSnapshot,
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+// Referencias del DOM
 const userNameEl = document.getElementById("userName");
 const btnLogout = document.getElementById("btnLogout");
 const btnNuevoTicket = document.getElementById("btnNuevoTicket");
@@ -19,7 +23,9 @@ const countCerrados = document.getElementById("countCerrados");
 
 let chartEstados = null;
 
-// 🔹 Sesión
+// ======================================================
+// 🔹 Autenticación y sesión
+// ======================================================
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "./index.html";
@@ -29,18 +35,24 @@ onAuthStateChanged(auth, (user) => {
   }
 });
 
-// 🔹 Logout
+// ======================================================
+// 🔹 Cerrar sesión
+// ======================================================
 btnLogout.addEventListener("click", async () => {
   await signOut(auth);
   window.location.href = "index.html";
 });
 
+// ======================================================
 // 🔹 Redirigir a creación de ticket
+// ======================================================
 btnNuevoTicket.addEventListener("click", () => {
   window.location.href = "new_ticket.html";
 });
 
-// 🔹 Escuchar tickets en tiempo real
+// ======================================================
+// 🔹 Cargar tickets en tiempo real desde Firestore
+// ======================================================
 function cargarTickets() {
   const q = query(collection(db, "tickets"), orderBy("fecha", "desc"));
 
@@ -55,20 +67,19 @@ function cargarTickets() {
     snapshot.forEach((doc) => {
       const t = doc.data();
       const id = doc.id;
-
       const estado = (t.estado || "").toLowerCase();
 
-      // Contadores
+      // Contadores por estado
       if (estado === "pendiente" || estado === "abierto") abiertos++;
       if (estado === "proceso" || estado === "en proceso") proceso++;
       if (estado === "cerrado") cerrados++;
 
-      // Ranking departamentos
+      // Ranking de departamentos
       if (t.departamento) {
         ranking[t.departamento] = (ranking[t.departamento] || 0) + 1;
       }
 
-      // 🔹 Mostrar SOLO tickets no cerrados en la lista
+      // Mostrar SOLO tickets no cerrados
       if (estado !== "cerrado") {
         const estadoClass = estado.replace(" ", "-");
         const div = document.createElement("div");
@@ -91,15 +102,17 @@ function cargarTickets() {
     countProceso.textContent = proceso;
     countCerrados.textContent = cerrados;
 
-    // Gráfico por estado
+    // Actualizar gráfico
     actualizarGrafico(abiertos, proceso, cerrados);
 
-    // Ranking
+    // Mostrar ranking
     mostrarRanking(ranking);
   });
 }
 
-// 🔹 Gráfico circular con porcentajes
+// ======================================================
+// 🔹 Gráfico circular (Chart.js)
+// ======================================================
 function actualizarGrafico(a, p, c) {
   const ctx = document.getElementById("chartEstados").getContext("2d");
   if (chartEstados) chartEstados.destroy();
@@ -135,7 +148,9 @@ function actualizarGrafico(a, p, c) {
   });
 }
 
+// ======================================================
 // 🔹 Ranking de departamentos
+// ======================================================
 function mostrarRanking(data) {
   const ul = document.getElementById("rankingDept");
   ul.innerHTML = "";
@@ -146,3 +161,40 @@ function mostrarRanking(data) {
     ul.appendChild(li);
   });
 }
+
+// ======================================================
+// 🔹 Menú móvil (corregido para funcionar en módulos)
+// ======================================================
+document.addEventListener("DOMContentLoaded", () => {
+  const btnMenu = document.getElementById("btnMenu");
+  const overlay = document.getElementById("overlay");
+  const body = document.body;
+
+  function closeSidebar() {
+    body.classList.remove("sidebar-open");
+    overlay.setAttribute("aria-hidden", "true");
+  }
+
+  function openSidebar() {
+    body.classList.add("sidebar-open");
+    overlay.setAttribute("aria-hidden", "false");
+  }
+
+  if (btnMenu) {
+    btnMenu.addEventListener("click", () => {
+      if (body.classList.contains("sidebar-open")) {
+        closeSidebar();
+      } else {
+        openSidebar();
+      }
+    });
+  }
+
+  if (overlay) {
+    overlay.addEventListener("click", closeSidebar);
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeSidebar();
+  });
+});

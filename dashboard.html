@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT - Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-
-    <!-- logo de pa pesta;a de la pagina -->
+  <!-- logo de la pestaña de la pagina -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-
   <link rel="stylesheet" href="css/stylodashboard.css" />
 </head>
 <body>
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" aria-label="Barra lateral de navegación">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -22,7 +20,7 @@
       </div>
     </div>
 
-    <div class="menu">
+    <nav class="menu" role="navigation">
       <button class="active">📊 Dashboard</button>
       <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
       <button onclick="window.location.href='tickets.html'">🎫 Tickets</button>
@@ -30,7 +28,7 @@
       <button onclick="window.location.href='reportes.html'">📑 Reportes</button>
       <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
       <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
-    </div>
+    </nav>
 
     <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
     <div class="sidebar-footer">
@@ -39,6 +37,9 @@
     </div>
   </aside>
 
+  <!-- Capa para cerrar sidebar en móvil -->
+  <div class="overlay" id="overlay" aria-hidden="true"></div>
+
   <!-- Main -->
   <main class="main">
     <div class="main-header">
@@ -46,7 +47,10 @@
         <h1>Dashboard</h1>
         <p>Panel de control general</p>
       </div>
+
       <div class="actions">
+        <!-- Botón de menú solo visible en móvil -->
+        <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">☰ Menú</button>
         <button class="btn-new" id="btnNuevoTicket">+ Nuevo Ticket</button>
       </div>
     </div>
@@ -80,5 +84,6 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script type="module" src="js/dashboard.js"></script>
+
 </body>
 </html>

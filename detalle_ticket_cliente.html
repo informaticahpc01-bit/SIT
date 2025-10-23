@@ -4,23 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIT • Detalle Ticket Cliente</title>
-
-      <!-- logo de pa pesta;a de la pagina -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
   <link rel="stylesheet" href="css/detalle_ticket_cliente.css">
-  <!-- jsPDF para exportar -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 </head>
-<body>
-  <!-- ==== NAVBAR SIMPLE ==== -->
-  <header class="header">
-    <h1>📄 Detalle del Ticket</h1>
-    <div class="acciones">
-      <button id="btnVolver">⬅️ Volver</button>
-         </div>
-  </header>
 
-  <main>
+<body>
+  <!-- ==== SIDEBAR ==== -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">SIT</div>
+      <div>
+        <div class="title">SIT - Cliente</div>
+        <div class="subtitle">Panel de usuario</div>
+      </div>
+      <!-- 🔹 Botón menú hamburguesa -->
+      <button id="menuToggle" class="menu-toggle">☰</button>
+    </div>
+
+    <!-- 🔹 Menú lateral -->
+    <div class="menu" id="menuLinks">
+      <button onclick="location.href='dashboard_cliente.html'">📊 Dashboard</button>
+      <button onclick="location.href='mis_tickets_cliente.html'">🎫 Mis Tickets</button>
+      <button onclick="location.href='nuevo_ticket_cliente.html'">➕ Nuevo Ticket</button>
+      <button onclick="location.href='chat_cliente.html'">💬 Chat</button>
+      <button onclick="location.href='perfil_cliente.html'">👤 Perfil</button>
+      <button class="btn-logout">🚪 Cerrar sesión</button>
+    </div>
+  </aside>
+
+  <!-- ==== MAIN ==== -->
+  <main class="main">
+    <header class="header">
+      <h1>📄 Detalle del Ticket</h1>
+      <div class="acciones">
+        <button id="btnVolver">⬅️ Volver</button>
+      </div>
+    </header>
+
     <!-- ==== Información del ticket ==== -->
     <section id="detalleTicket" class="detalle-card">
       <p>Cargando ticket...</p>
@@ -34,11 +57,18 @@
       </div>
     </section>
   </main>
- <!-- jsPDF -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<!-- jsPDF AutoTable -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
 
+  <!-- ==== JS ==== -->
   <script type="module" src="js/detalle_ticket_cliente.js"></script>
+
+  <!-- 🔹 Script del menú -->
+  <script>
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menuLinks');
+    toggle.addEventListener('click', () => {
+      menu.classList.toggle('show');
+      toggle.textContent = menu.classList.contains('show') ? '✖' : '☰';
+    });
+  </script>
 </body>
 </html>

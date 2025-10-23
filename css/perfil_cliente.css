@@ -8,9 +8,7 @@
   --danger: #ef4444;
   --success: #10b981;
   --accent: #3b82f6;
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-2: rgba(255, 255, 255, 0.05);
-  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
 }
 
 /* ==== Reset ==== */
@@ -26,6 +24,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-size: 14px;
+  overflow-x: hidden;
 }
 
 /* ==== Sidebar ==== */
@@ -35,6 +34,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 240px;
+  transition: transform 0.3s ease;
+  z-index: 1000;
 }
 
 .brand {
@@ -52,6 +54,7 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  color: #fff;
 }
 
 .title {
@@ -77,6 +80,7 @@ body {
   cursor: pointer;
   transition: background 0.3s;
 }
+
 .menu button:hover,
 .menu button.active {
   background: rgba(59, 130, 246, 0.2);
@@ -95,6 +99,7 @@ body {
   font-weight: 600;
   transition: background 0.3s;
 }
+
 .btn-logout:hover {
   background: #dc2626;
 }
@@ -102,22 +107,30 @@ body {
 /* ==== Main ==== */
 .main {
   flex: 1;
-  padding: 30px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;      /* Alinea el contenido a la izquierda */
+  justify-content: flex-start;  /* ✅ Evita el centrado vertical */
 }
 
 .main h1 {
   font-size: 22px;
   margin-bottom: 20px;
+  color: #fff;
 }
 
 /* ==== Perfil Card ==== */
 .perfil-card {
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 20px;
-  max-width: 400px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  padding: 25px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  backdrop-filter: blur(10px);
+  margin-top: 10px; /* Espacio bajo el título */
 }
 
 .perfil-card p {
@@ -143,58 +156,72 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn-reset:hover {
   background: #2563eb;
 }
 
-/* ==== Toasts ==== */
-#toastContainer {
+/* ==== Botón de menú móvil ==== */
+.menu-toggle {
+  display: none;
   position: fixed;
-  top: 20px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.toast {
-  min-width: 220px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: white;
-  animation: slideIn 0.4s ease, fadeOut 0.5s ease 3.5s forwards;
-}
-
-.toast.info {
+  top: 10px;
+  left: 10px;
   background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 22px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 2000;
 }
 
-.toast.success {
-  background: var(--success);
-}
+/* ==== Responsive ==== */
 
-.toast.error {
-  background: var(--danger);
-}
-
-/* Animaciones */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
+/* Tablets */
+@media (max-width: 1024px) {
+  .main {
+    align-items: center;
+    justify-content: flex-start;
   }
-  to {
-    opacity: 1;
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100%;
+    transform: translateX(-100%);
+    background: var(--sidebar);
+    z-index: 1000;
+  }
+
+  .sidebar.open {
     transform: translateX(0);
   }
-}
 
-@keyframes fadeOut {
-  to {
-    opacity: 0;
-    transform: translateX(100%);
+  .main {
+    padding: 25px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .perfil-card {
+    max-width: 100%;
+    width: 90%;
+    padding: 20px;
+    margin-top: 30px;
   }
 }

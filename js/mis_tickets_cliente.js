@@ -43,8 +43,12 @@ function formatDate(ms) {
   });
 }
 
+/* ===================================================
+   🎨 Renderizado de Tickets en Tarjetas (Cards)
+=================================================== */
 function renderTickets(tickets) {
   listaTickets.innerHTML = "";
+
   if (!tickets.length) {
     listaTickets.innerHTML = `<p class="empty">⚠️ No se encontraron tickets con los filtros aplicados</p>`;
     return;
@@ -54,20 +58,45 @@ function renderTickets(tickets) {
     const fechaMs = tsToMillis(t.fecha);
     const fechaTxt = fechaMs ? formatDate(fechaMs) : "Sin fecha";
 
+    // ✅ Crear contenedor principal con clase de tarjeta
     const div = document.createElement("div");
-    div.classList.add("ticket");
+    div.classList.add("ticket-card");
+
+    // ✅ Estructura visual tipo tarjeta (compatible con CSS moderno)
     div.innerHTML = `
-      <h3>${t.asunto || "Sin asunto"}</h3>
-      <p>${t.descripcion || ""}</p>
-      <span class="estado ${t.estado?.toLowerCase() || ""}">
-        ${t.estado || "—"}
-      </span><br/>
-      <small><b>Creado:</b> ${fechaTxt}</small>
-      <button class="btn-detalles" data-id="${t.id}">📄 Detalles</button>
+      <div class="ticket-header">
+        <h3>${t.asunto || "Sin asunto"}</h3>
+        <span class="estado ${t.estado?.toLowerCase() || ""}">
+          ${t.estado || "—"}
+        </span>
+      </div>
+
+      <div class="ticket-body">
+        <p><strong>Descripción:</strong> ${t.descripcion || "Sin descripción"}</p>
+        <p><strong>Prioridad:</strong> ${t.prioridad || "No definida"}</p>
+        <p><strong>Departamento:</strong> ${t.departamento || "General"}</p>
+      </div>
+
+      <div class="ticket-footer">
+        <small>📅 <b>Creado:</b> ${fechaTxt}</small>
+        <button class="btn-detalles" data-id="${t.id}">📄 Detalles</button>
+      </div>
     `;
+
+    // ✅ Agregar animación suave (fade-in)
+    div.style.opacity = "0";
+    div.style.transform = "translateY(10px)";
     listaTickets.appendChild(div);
+
+    // Pequeña animación al insertar
+    requestAnimationFrame(() => {
+      div.style.transition = "all 0.4s ease";
+      div.style.opacity = "1";
+      div.style.transform = "translateY(0)";
+    });
   });
 
+  // ✅ Eventos de los botones de detalles
   document.querySelectorAll(".btn-detalles").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       const id = e.currentTarget.dataset.id;
@@ -76,15 +105,18 @@ function renderTickets(tickets) {
   });
 }
 
+/* ===================================================
+   🔎 Filtros dinámicos
+=================================================== */
 function aplicarFiltros() {
   let filtrados = [...allTickets];
 
-  /* 🚫 Quitar eliminados */
+  // 🚫 Quitar eliminados
   filtrados = filtrados.filter(
     (t) => (t.estado || "").toLowerCase() !== "eliminado"
   );
 
-  // 🔎 Texto (buscar por asunto o descripción)
+  // 🔎 Texto
   const texto = buscarTexto.value.toLowerCase().trim();
   if (texto) {
     filtrados = filtrados.filter(
@@ -115,8 +147,7 @@ function aplicarFiltros() {
   if (filtroFecha.value === "hoy") {
     filtrados = filtrados.filter((t) => {
       const ms = tsToMillis(t.fecha);
-      if (!ms) return false;
-      return new Date(ms).toDateString() === hoy.toDateString();
+      return ms && new Date(ms).toDateString() === hoy.toDateString();
     });
   } else if (filtroFecha.value === "semana") {
     const ini = new Date();
@@ -157,13 +188,11 @@ function aplicarFiltros() {
     });
   }
 
-  /* === Ordenar === */
+  // === Ordenar ===
   const ordenEstado = { pendiente: 1, proceso: 2, cerrado: 3 };
-
   filtrados.sort((a, b) => {
     const estadoA = ordenEstado[(a.estado || "").toLowerCase()] || 99;
     const estadoB = ordenEstado[(b.estado || "").toLowerCase()] || 99;
-
     if (estadoA !== estadoB) return estadoA - estadoB;
 
     const fechaA = tsToMillis(a.fecha) || 0;
@@ -174,7 +203,9 @@ function aplicarFiltros() {
   renderTickets(filtrados);
 }
 
-/* ====== Cerrar sesión ====== */
+/* ===================================================
+   🚪 Cerrar sesión
+=================================================== */
 if (btnLogout) {
   btnLogout.addEventListener("click", async () => {
     await signOut(auth);
@@ -182,7 +213,9 @@ if (btnLogout) {
   });
 }
 
-/* ====== Auth y datos ====== */
+/* ===================================================
+   🔐 Autenticación y carga de datos
+=================================================== */
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "index.html";
@@ -198,9 +231,10 @@ onAuthStateChanged(auth, (user) => {
   });
 });
 
-/* ====== Eventos en vivo ====== */
+/* ===================================================
+   ⚙️ Eventos dinámicos
+=================================================== */
 if (buscarTexto) buscarTexto.addEventListener("input", aplicarFiltros);
-
 [filtroEstado, filtroPrioridad, filtroFecha, fechaInicio, fechaFin].forEach((el) => {
   if (el) el.addEventListener("change", aplicarFiltros);
 });

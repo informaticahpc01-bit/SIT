@@ -91,7 +91,11 @@ btnLogout.addEventListener("click", async () => {
    Tickets en tiempo real
 ========================= */
 function cargarTickets() {
-  const qTick = collection(db, "tickets");
+  // Solo escuchar los tickets del usuario autenticado
+  const qTick = query(
+    collection(db, "tickets"),
+    where("creadoPor", "==", currentUser.email) // 👈 ajusta el campo según tu estructura
+  );
 
   onSnapshot(qTick, (snap) => {
     let tickets = [];
@@ -105,7 +109,7 @@ function cargarTickets() {
       const t = { id: ds.id, ...ds.data() };
       if ((t.estado || "").toLowerCase() === "eliminado") return;
 
-      // escuchar mensajes de cada ticket
+      // escuchar los mensajes de cada ticket individual del usuario
       const qChat = collection(db, "tickets", t.id, "chat");
       onSnapshot(qChat, (chatSnap) => {
         let noLeidos = 0;

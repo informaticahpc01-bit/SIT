@@ -8,6 +8,7 @@
   --accent1: #10b981;
   --accent2: #3b82f6;
   --danger: #ef4444;
+  --radius: 12px;
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
 }
 
@@ -25,7 +26,7 @@ body {
   font-size: 14px;
 }
 
-/* Sidebar */
+/* ==== SIDEBAR ==== */
 .sidebar {
   background: var(--sidebar);
   padding: 20px 15px;
@@ -38,6 +39,7 @@ body {
 .brand {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -50,18 +52,30 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
+  color: #fff;
 }
 
-.title {
-  font-weight: 700;
-  font-size: 14px;
-}
+.title { font-weight: 700; font-size: 14px; }
+.subtitle { font-size: 12px; color: var(--muted); }
 
-.subtitle {
-  font-size: 12px;
-  color: var(--muted);
+/* 🔹 Botón hamburguesa */
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
+.menu-toggle:hover { transform: scale(1.1); }
 
+/* ==== MENÚ ==== */
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 .menu button {
   display: flex;
   align-items: center;
@@ -81,35 +95,36 @@ body {
   color: #fff;
 }
 
+/* 🔴 Botón salir dentro del menú */
 .btn-logout {
-  margin-top: auto;
-  padding: 8px 12px;
+  background: var(--danger);
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
   border: none;
   border-radius: 8px;
-  background: var(--danger);
-  color: white;
-  cursor: pointer;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 10px;
+  margin-top: 10px;
+  transition: background 0.3s;
 }
+.btn-logout:hover { background: #dc2626; }
 
-/* Main */
+/* ==== MAIN ==== */
 .main {
   flex: 1;
   padding: 40px;
 }
-
 .main h1 {
   font-size: 22px;
   margin-bottom: 25px;
   color: #fff;
 }
 
-/* Formulario */
+/* ==== FORMULARIO ==== */
 .form {
   background: var(--card);
   padding: 25px;
-  border-radius: 12px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -130,42 +145,34 @@ body {
   outline: none;
   transition: border 0.2s, background 0.2s;
 }
-
 .form input:focus,
 .form textarea:focus,
 .form select:focus {
   border-color: var(--accent2);
   background: rgba(31, 41, 55, 0.9);
 }
+.form textarea { resize: none; }
 
-.form textarea {
-  resize: none;
-}
-
-.form select option {
-  background: #1f2937;
-  color: #f3f4f6;
-}
-
-/* Botón */
-.form .btn-reset {
+/* ==== BOTÓN ENVIAR ==== */
+.btn-enviar {
   padding: 12px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   border: none;
   background: var(--accent2);
-  color: white;
+  color: #fff;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
 }
-
-.form .btn-reset:hover {
+.btn-enviar:hover {
   background: #2563eb;
   transform: translateY(-2px);
 }
+.btn-enviar:active { transform: scale(0.97); }
 
-/* ==== Toasts ==== */
+/* ==== TOASTS ==== */
 #toastContainer {
   position: fixed;
   top: 20px;
@@ -175,7 +182,6 @@ body {
   gap: 10px;
   z-index: 2000;
 }
-
 .toast {
   padding: 12px 18px;
   border-radius: 8px;
@@ -186,25 +192,34 @@ body {
   animation: fadeInOut 4s forwards;
   opacity: 0.95;
 }
-
-/* Tipos de mensaje */
-.toast.info {
-  background: #3b82f6; /* Azul */
-}
-.toast.success {
-  background: #10b981; /* Verde */
-}
-.toast.error {
-  background: #ef4444; /* Rojo */
-}
-.toast.warning {
-  background: #f59e0b; /* Naranja */
-}
-
-/* Animación */
+.toast.info { background: #3b82f6; }
+.toast.success { background: #10b981; }
+.toast.error { background: #ef4444; }
+.toast.warning { background: #f59e0b; }
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateY(-20px); }
-  10% { opacity: 1; transform: translateY(0); }
-  90% { opacity: 1; transform: translateY(0); }
+  10%, 90% { opacity: 1; transform: translateY(0); }
   100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 1024px) {
+  body { flex-direction: column; }
+  .sidebar { min-width: 100%; flex-direction: column; }
+  .main { padding: 25px; }
+}
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+  .menu { display: none; width: 100%; margin-top: 10px; }
+  .menu.show { display: flex; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-10px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  .menu button, .btn-logout { width: 100%; }
+  .form { width: 100%; max-width: none; }
+}
+@media (max-width: 480px) {
+  .main { padding: 15px; }
+  .form { padding: 20px; }
 }
