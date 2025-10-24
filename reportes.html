@@ -5,16 +5,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT — Reportes</title>
-    <!-- logo de pa pesta;a de la pagina -->
+
+  <!-- Ícono de pestaña -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
 
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="css/reportes.css" />
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar">
+  <!-- 🔹 Botón menú hamburguesa (solo visible en móvil) -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="brand-logo">SIT</div>
       <div class="brand-text">
@@ -40,7 +47,7 @@
     </div>
   </aside>
 
-  <!-- Main -->
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <!-- Header -->
     <header class="main-header">
@@ -49,9 +56,7 @@
         <p>Análisis visual y métricas en tiempo real</p>
       </div>
       <div class="actions">
-        <button id="btnExportPDF" class="btn btn-primary">
-          📄 Exportar PDF
-        </button>
+        <button id="btnExportPDF" class="btn btn-primary">📄 Exportar PDF</button>
       </div>
     </header>
 
@@ -126,18 +131,21 @@
         </div>
         <canvas id="chartEstado"></canvas>
       </div>
+
       <div class="chart-card medium">
         <div class="chart-header">
           <h4>🏢 Tickets por Departamento</h4>
         </div>
         <canvas id="chartDepto"></canvas>
       </div>
+
       <div class="chart-card large">
         <div class="chart-header">
           <h4>⏱ Promedio de Respuesta por Mes</h4>
         </div>
         <canvas id="chartRespuestaMes"></canvas>
       </div>
+
       <div class="chart-card large">
         <div class="chart-header">
           <h4>✅ Promedio de Resolución por Mes</h4>
@@ -168,7 +176,7 @@
     </section>
   </main>
 
-  <!-- Librerías -->
+  <!-- 🔹 Librerías -->
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -177,6 +185,25 @@
   <script>
     lucide.createIcons();
   </script>
+
+  <!-- 🔹 JS del menú hamburguesa -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Cierra el menú si se hace clic fuera en móviles
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+  <!-- JS principal de reportes -->
   <script type="module" src="js/reportes.js"></script>
 </body>
 

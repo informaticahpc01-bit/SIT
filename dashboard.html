@@ -5,13 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT - Dashboard</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <!-- logo de la pestaña de la pagina -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
   <link rel="stylesheet" href="css/stylodashboard.css" />
 </head>
+
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar" aria-label="Barra lateral de navegación">
+  <!-- 🔹 Botón menú hamburguesa -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar" aria-label="Barra lateral de navegación">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -37,20 +40,14 @@
     </div>
   </aside>
 
-  <!-- Capa para cerrar sidebar en móvil -->
-  <div class="overlay" id="overlay" aria-hidden="true"></div>
-
-  <!-- Main -->
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <div class="main-header">
       <div>
         <h1>Dashboard</h1>
         <p>Panel de control general</p>
       </div>
-
       <div class="actions">
-        <!-- Botón de menú solo visible en móvil -->
-        <button class="btn-menu" id="btnMenu" aria-label="Abrir menú">☰ Menú</button>
         <button class="btn-new" id="btnNuevoTicket">+ Nuevo Ticket</button>
       </div>
     </div>
@@ -63,27 +60,46 @@
         <p>En proceso: <span id="countProceso">0</span></p>
         <p>Cerrados: <span id="countCerrados">0</span></p>
       </div>
+
       <div class="card">
         <h2>Gráfico por Estado</h2>
         <canvas id="chartEstados"></canvas>
       </div>
+
       <div class="card">
         <h2>Ranking Departamentos</h2>
         <ul id="rankingDept"></ul>
       </div>
     </div>
 
-    <!-- Listado de tickets -->
+    <!-- Últimos tickets -->
     <div class="card">
       <h2>Últimos Tickets</h2>
       <div id="listaTickets"></div>
     </div>
   </main>
 
-  <!-- Librerías -->
+  <!-- 🔹 Librerías -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script type="module" src="js/dashboard.js"></script>
 
+  <!-- 🔹 JS Hamburguesa -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Cierra el menú al hacer clic fuera
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+  <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>

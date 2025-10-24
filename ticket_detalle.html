@@ -5,15 +5,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detalle de Ticket - SIT</title>
-    <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
   <link rel="stylesheet" href="css/detalleti.css">
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar">
+  <!-- 🔹 Botón menú hamburguesa -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -21,6 +22,7 @@
         <div class="subtitle">Panel de gestión tecnológica</div>
       </div>
     </div>
+
     <div class="menu">
       <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
       <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
@@ -30,10 +32,11 @@
       <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
       <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
     </div>
+
     <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
   </aside>
 
-  <!-- Main -->
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <div class="main-header">
       <div>
@@ -53,7 +56,6 @@
       <p class="ticket-meta"><strong>Creado por:</strong> <span id="creadoPor"></span></p>
       <p class="ticket-meta"><strong>Fecha:</strong> <span id="fecha"></span></p>
 
-      <!-- Solo visible para admin/técnico -->
       <div class="state-buttons" id="stateButtons" style="display:none">
         <button class="state-pendiente" onclick="actualizarEstado('Pendiente')">Marcar Pendiente</button>
         <button class="state-proceso" onclick="actualizarEstado('En proceso')">Marcar En proceso</button>
@@ -61,7 +63,6 @@
       </div>
     </div>
 
-    <!-- Comentarios -->
     <div class="comments">
       <h3>Comentarios</h3>
       <div id="comentariosList"></div>
@@ -80,12 +81,25 @@
         </div>
       </div>
     </div>
-
-
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <!-- 🔹 Scripts -->
+  <script>
+    // Hamburguesa responsive
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
   <script type="module" src="js/ticket_detalle.js"></script>
 </body>
 

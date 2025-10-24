@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SIT - Departamentos</title>
 
-    <!-- logo de pa pesta;a de la pagina -->
-  <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
+  <!-- logo de la pestaña -->
+  <link rel="icon" type="image/png" href="assets/icons/logoicon.png" />
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Estilos globales y propios -->
-  <link rel="stylesheet" href="css/global.css" />
+  <!-- Estilos -->
   <link rel="stylesheet" href="css/departamentos.css" />
 </head>
+
 <body>
+  <!-- 🔹 Botón menú hamburguesa (visible solo en móviles) -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -33,11 +37,11 @@
       <button onclick="window.location.href='reportes.html'">📑 Reportes</button>
       <button class="active">🏢 Departamentos</button>
       <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
+      <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
     </div>
-    <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
   </aside>
 
-  <!-- Contenido -->
+  <!-- Contenido principal -->
   <div class="container">
     <h1>Gestión de Departamentos</h1>
 
@@ -60,26 +64,28 @@
         <h2>📋 Lista de Departamentos</h2>
       </div>
       <div class="card-body">
-        <table>
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Fecha de Creación</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="deptTable">
-            <!-- Ejemplo de fila -->
-            <tr>
-              <td>Recursos Humanos</td>
-              <td>2025-09-18</td>
-              <td>
-                <button class="btn-primary">✏ Editar</button>
-                <button class="btn-danger">🗑 Eliminar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Fecha de Creación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="deptTable">
+              <!-- Ejemplo de fila -->
+              <tr>
+                <td>Recursos Humanos</td>
+                <td>2025-09-18</td>
+                <td>
+                  <button class="btn-primary">✏ Editar</button>
+                  <button class="btn-danger">🗑 Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -87,7 +93,25 @@
   <!-- Overlay -->
   <div id="overlay">⏳ Procesando, por favor espera...</div>
 
-  <!-- JS -->
+  <!-- 🔹 Script del botón hamburguesa -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Cerrar menú al hacer clic fuera en móviles
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+  <!-- JS funcional del sistema -->
   <script type="module" src="js/departamentos.js"></script>
 </body>
+
 </html>

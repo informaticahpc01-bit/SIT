@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Tickets - SIT</title>
-    <!-- logo de pa pesta;a de la pagina -->
+
+  <!-- Ícono -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
 
+  <!-- Fuente -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos -->
   <link rel="stylesheet" href="css/tickets.css" />
 </head>
 
 <body>
-  <!-- Sidebar -->
-  <aside class="sidebar">
+  <!-- 🔹 Botón menú hamburguesa -->
+  <button class="menu-toggle" id="menuToggle">☰</button>
+
+  <!-- 🔹 Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -21,6 +28,7 @@
         <div class="subtitle">Panel de gestión tecnológica</div>
       </div>
     </div>
+
     <div class="menu">
       <button onclick="window.location.href='dashboard.html'">📊 Dashboard</button>
       <button onclick="window.location.href='new_user.html'">👥 Usuarios</button>
@@ -30,10 +38,11 @@
       <button onclick="window.location.href='departamentos.html'">🏢 Departamentos</button>
       <button onclick="window.location.href='bitacora.html'">📂 Bitácora</button>
     </div>
+
     <button class="btn-logout" id="btnLogout">Cerrar sesión</button>
   </aside>
 
-  <!-- Main -->
+  <!-- 🔹 Contenido principal -->
   <main class="main">
     <div class="main-header">
       <div>
@@ -43,7 +52,7 @@
       <button class="btn-new" onclick="location.href='new_ticket.html'">+ Nuevo Ticket</button>
     </div>
 
-    <!-- 🔎 Barra de búsqueda y exportación -->
+    <!-- 🔎 Filtros -->
     <div class="filters">
       <select id="filtroCampo">
         <option value="asunto">Asunto</option>
@@ -81,7 +90,7 @@
     <div id="paginador" class="paginador"></div>
   </main>
 
-  <!-- Modal cambiar estado -->
+  <!-- 🔹 Modal Cambiar Estado -->
   <div id="modalEstado" class="modal">
     <div class="modal-content">
       <h2>Cambiar estado</h2>
@@ -97,12 +106,11 @@
     </div>
   </div>
 
-  <!-- Modal asignar técnico + prioridad -->
+  <!-- 🔹 Modal Asignar Técnico -->
   <div id="modalTecnico" class="modal">
     <div class="modal-content">
       <h2>Asignar ticket</h2>
 
-      <!-- Seleccionar prioridad -->
       <label for="prioridadSelect">📌 Prioridad:</label>
       <select id="prioridadSelect">
         <option value="">Seleccione prioridad...</option>
@@ -112,7 +120,6 @@
         <option value="critica">Crítica 🔴</option>
       </select>
 
-      <!-- Seleccionar técnico -->
       <label for="tecnicoSelect">👨‍🔧 Técnico:</label>
       <select id="tecnicoSelect"></select>
 
@@ -123,23 +130,29 @@
     </div>
   </div>
 
-  <!-- jsPDF + AutoTable (para exportar PDF) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-    integrity="sha512-YkAedJqE1vQf4g1s+3oGk1d8mFmS0H4lCNYQw7hK8mP0k+4WQdDlOaQy0b3zZGu9+Xrz8p+fEy0L2ZKXjvK+0g=="
-    crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.4/jspdf.plugin.autotable.min.js"
-    integrity="sha512-yem7pY08iH19X5VMeh1h5v7fYqHLbD3I5lAqi+oK5d0Ew1C/1H0oX1m7p0G5Q8mL1qV3Uj3GvQZ2bL3q7p2H8A=="
-    crossorigin="anonymous"></script>
-
-  <!-- Tu script de tickets -->
-
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- 🔹 Librerías externas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
+  <!-- 🔹 JS del menú hamburguesa -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
 
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+    });
+
+    // Cerrar el menú si se hace clic fuera (en móviles)
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+        sidebar.classList.remove('open');
+      }
+    });
+  </script>
+
+  <!-- 🔹 Script principal de tickets -->
   <script type="module" src="js/ticketlist.js"></script>
-
 </body>
-
 </html>
