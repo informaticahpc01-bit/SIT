@@ -10,7 +10,7 @@
   --shadow: 0 6px 20px rgba(0,0,0,0.4);
 }
 
-/* Reset */
+/* ========== RESET GENERAL ========== */
 * {
   margin: 0;
   padding: 0;
@@ -27,7 +27,7 @@ body {
   padding: 40px 20px;
 }
 
-/* Header */
+/* ========== HEADER ========== */
 .header {
   text-align: center;
   margin-bottom: 25px;
@@ -43,7 +43,7 @@ body {
   margin-top: 6px;
 }
 
-/* Card */
+/* ========== CARD PRINCIPAL ========== */
 .ticket-card {
   background: var(--card);
   border-radius: var(--radius);
@@ -54,6 +54,7 @@ body {
   border: 1px solid rgba(255,255,255,0.1);
 }
 
+/* ========== FORMULARIO ========== */
 .form-group {
   margin-bottom: 18px;
 }
@@ -74,22 +75,18 @@ body {
   background: rgba(255,255,255,0.05);
   color: var(--text);
   font-size: 14px;
-  appearance: none; /* oculta estilos nativos */
+  appearance: none;
 }
-
-/* Asegurar que se lean bien las opciones */
 .form-group select option {
   background: var(--card);
   color: var(--text);
 }
-
-/* Textarea */
 textarea {
   resize: none;
   height: 100px;
 }
 
-/* Botones */
+/* ========== BOTONES ========== */
 .form-actions {
   display: flex;
   gap: 12px;
@@ -119,32 +116,71 @@ textarea {
   background: #475569;
 }
 
-/* Mensajes */
+/* ========== MENSAJES ========== */
 .msg {
   margin-top: 15px;
   font-size: 13px;
   text-align: center;
 }
-.error {
-  color: var(--danger);
-}
-.ok {
-  color: var(--accent1);
+.error { color: var(--danger); }
+.ok { color: var(--accent1); }
+
+/* =========================================================
+   🧭 RESPONSIVE DESIGN
+   Mantiene colores y estilo original
+========================================================= */
+
+/* 🔹 TABLETS (máx. 1024px) */
+@media (max-width: 1024px) {
+  body {
+    padding: 30px 20px;
+  }
+  .ticket-card {
+    max-width: 90%;
+  }
 }
 
-/* Responsive */
+/* 🔹 MÓVILES HORIZONTALES (máx. 768px) */
 @media (max-width: 768px) {
   body {
     padding: 20px;
-  }
-  .ticket-card {
-    max-width: 100%;
-    padding: 20px;
+    align-items: center;
   }
   .header h1 {
     font-size: 22px;
   }
   .header p {
     font-size: 13px;
+  }
+  .ticket-card {
+    width: 100%;
+    padding: 20px;
+  }
+  .form-actions {
+    flex-direction: column; /* 🔸 Botones apilados */
+  }
+  .btn {
+    width: 100%;
+  }
+}
+
+/* 🔹 MÓVILES VERTICALES (máx. 480px) */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 20px;
+  }
+  .header p {
+    font-size: 12px;
+  }
+  .ticket-card {
+    padding: 18px;
+  }
+  input, textarea, select {
+    font-size: 13px;
+    padding: 10px;
+  }
+  .btn {
+    font-size: 14px;
+    padding: 10px;
   }
 }

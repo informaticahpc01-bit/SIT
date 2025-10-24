@@ -208,7 +208,7 @@ async function exportarPDF() {
   const pageWidth = doc.internal.pageSize.getWidth();
 
   // Logo
-  const logo = await toBase64("assets/icons/logop.png").catch(() => null);
+  const logo = await toBase64("assets/icons/logo.jpg").catch(() => null);
   if (logo) {
     doc.addImage(logo, "PNG", 15, 10, 28, 28);
   }
@@ -216,7 +216,7 @@ async function exportarPDF() {
   // Encabezado
   doc.setFont("helvetica", "bold");
   doc.setFontSize(13);
-  doc.text("Nombre del Establecimiento", pageWidth / 2, 18, { align: "center" });
+  doc.text("Hospital Puerto Cortes", pageWidth / 2, 18, { align: "center" });
 
   doc.setFontSize(12);
   doc.text("SIT - Sistema Inteligente de Tickets", pageWidth / 2, 25, { align: "center" });

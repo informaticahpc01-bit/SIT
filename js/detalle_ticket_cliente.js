@@ -148,8 +148,10 @@ async function generarPDFTicket(t, solucionTexto, comentarios = []) {
   const pageWidth = doc.internal.pageSize.getWidth();
 
   // Logo
-  const logo = await toBase64("assets/logo.png").catch(() => null);
-  if (logo) doc.addImage(logo, "PNG", 15, 10, 28, 28);
+  const logo = await toBase64("assets/icons/logo.jpg").catch(() => null);
+    if (logo) {
+    doc.addImage(logo, "jpg", 15, 10, 28, 28);
+  }
 
   // Encabezado
   doc.setFont("helvetica", "bold");

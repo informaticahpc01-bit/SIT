@@ -5,16 +5,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIT - Usuarios</title>
-    <!-- logo de pa pesta;a de la pagina -->
   <link rel="icon" type="image/png" href="assets/icons/logoicon.png"/>
-
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/usuarios.css">
 </head>
 
 <body>
+  <!-- 🔹 Botón menú hamburguesa (solo visible en ≤1024px) -->
+  <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">☰</button>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="brand">
       <div class="logo">SIT</div>
       <div>
@@ -191,13 +192,24 @@
 
       <div class="modal-actions">
         <button id="btnGuardarEdicion" class="btn">💾 Guardar cambios</button>
-        <button class="btn-secondary" onclick="document.getElementById('modalEditar').style.display='none'">❌
-          Cancelar</button>
+        <button class="btn-secondary" onclick="document.getElementById('modalEditar').style.display='none'">❌ Cancelar</button>
       </div>
     </div>
   </div>
 
   <script type="module" src="js/users.js"></script>
-</body>
 
+  <!-- 🔹 Script hamburguesa (separado del módulo para evitar conflictos) -->
+  <script>
+    const toggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    if (toggle && sidebar) {
+      toggle.addEventListener('click', () => {
+        sidebar.classList.toggle('open');
+        toggle.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
 </html>

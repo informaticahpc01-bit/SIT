@@ -5,6 +5,8 @@ import {
   getDocs, 
   deleteDoc, 
   doc, 
+  query, 
+  where,
   serverTimestamp 
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -25,6 +27,7 @@ function showToast(msg, ok = true) {
   toast.style.padding = "10px 15px";
   toast.style.borderRadius = "8px";
   toast.style.boxShadow = "0 4px 12px rgba(0,0,0,0.3)";
+  toast.style.zIndex = "9999";
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 2500);
 }
@@ -50,7 +53,7 @@ async function cargarDepartamentos() {
 
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${(data.nombre || "").toUpperCase()}</td>   <!-- 🔹 siempre en MAYÚSCULAS -->
+      <td>${(data.nombre || "").toUpperCase()}</td>
       <td>${fecha}</td>
       <td>
         <button class="btn-danger" onclick="eliminarDept('${docSnap.id}')">Eliminar</button>
@@ -60,17 +63,31 @@ async function cargarDepartamentos() {
   });
 }
 
-// 🔹 Crear nuevo departamento
+// 🔹 Crear nuevo departamento (sin duplicados)
 formDept.addEventListener("submit", async (e) => {
   e.preventDefault();
-  if (!deptName.value.trim()) return;
+  const nombre = deptName.value.trim().toUpperCase();
+  if (!nombre) return;
 
-  showOverlay("Guardando departamento...");
+  showOverlay("Verificando departamento...");
 
   try {
-    await addDoc(collection(db, "departamentos"), {
-      nombre: deptName.value.trim().toUpperCase(), // 🔹 siempre en MAYÚSCULA
-      fechaCreacion: serverTimestamp() // ⏰ se guarda la fecha/hora del servidor
+    // 🔸 Verificar si ya existe un departamento con el mismo nombre
+    const deptRef = collection(db, "departamentos");
+    const q = query(deptRef, where("nombre", "==", nombre));
+    const snapshot = await getDocs(q);
+
+    if (!snapshot.empty) {
+      // Ya existe un departamento con ese nombre
+      hideOverlay();
+      showToast("⚠ El departamento ya existe", false);
+      return;
+    }
+
+    // 🔸 Crear nuevo documento
+    await addDoc(deptRef, {
+      nombre,
+      fechaCreacion: serverTimestamp()
     });
 
     deptName.value = "";

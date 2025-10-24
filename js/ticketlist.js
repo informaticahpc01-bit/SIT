@@ -392,9 +392,9 @@ document.getElementById("btnExportPDF").addEventListener("click", async () => {
   }
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(14).text("Grafica", pageWidth / 2, 48, { align: "center" });
+  doc.setFontSize(14).text("HOSPITAL PUERTO CORTES", pageWidth / 2, 48, { align: "center" });
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(10).text("Dirección: Tegucigalpa, Honduras", pageWidth / 2, 54, { align: "center" });
+  doc.setFontSize(10).text("Dirección: Puerto Cortes, Honduras", pageWidth / 2, 54, { align: "center" });
 
   const ahora = new Date();
   const fechaGenerado = `Generado el ${ahora.toLocaleDateString()} ${ahora.toLocaleTimeString()}`;

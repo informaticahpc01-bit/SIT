@@ -266,7 +266,7 @@
     const pageWidth = doc.internal.pageSize.getWidth();
 
     // Logo
-    const logo = await toBase64("assets/logo.png").catch(() => null);
+    const logo = await toBase64("assets/logo.jpg").catch(() => null);
     if (logo) doc.addImage(logo, "PNG", 15, 10, 28, 28);
 
     // Encabezado
