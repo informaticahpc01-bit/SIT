@@ -345,3 +345,55 @@ body {
     min-height: 80px;
   }
 }
+
+/* ==== BOTÓN IMPRIMIR / REIMPRIMIR ==== */
+.imprimir-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+#btnImprimir {
+  padding: 8px 14px;
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+#btnImprimir:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}
+
+@media (max-width: 480px) {
+  .imprimir-container {
+    justify-content: stretch;
+  }
+
+  #btnImprimir {
+    width: 100%;
+  }
+}
+/* ==== BOTÓN IMPRIMIR EN TARJETA ==== */
+.ticket-actions .btn-action.print {
+  background: linear-gradient(135deg, var(--accent1), var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  padding: 6px 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, opacity 0.3s ease;
+}
+
+.ticket-actions .btn-action.print:hover {
+  opacity: 0.9;
+  transform: scale(1.03);
+}

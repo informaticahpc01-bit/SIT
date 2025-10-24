@@ -46,6 +46,7 @@
       <button class="btn-new" onclick="location.href='tickets.html'">← Regresar</button>
     </div>
 
+    <!-- 🔹 Información del Ticket -->
     <div class="ticket-detail" id="ticketDetail">
       <h2 id="asunto">Cargando...</h2>
       <p class="ticket-meta"><strong>Descripción:</strong> <span id="descripcion"></span></p>
@@ -56,13 +57,22 @@
       <p class="ticket-meta"><strong>Creado por:</strong> <span id="creadoPor"></span></p>
       <p class="ticket-meta"><strong>Fecha:</strong> <span id="fecha"></span></p>
 
+      <!-- 🔹 Botones de cambio de estado -->
       <div class="state-buttons" id="stateButtons" style="display:none">
         <button class="state-pendiente" onclick="actualizarEstado('Pendiente')">Marcar Pendiente</button>
         <button class="state-proceso" onclick="actualizarEstado('En proceso')">Marcar En proceso</button>
         <button class="state-cerrado" onclick="actualizarEstado('Cerrado')">Marcar Cerrado</button>
       </div>
+      <div id="avisoTicket" style="display:none;"></div>
+
     </div>
 
+    <!-- 🔹 Botón Imprimir / Reimprimir Ticket -->
+    <div class="imprimir-container">
+      <button id="btnImprimir" class="btn-new" style="display:none">🖨️ Imprimir Ticket</button>
+    </div>
+
+    <!-- 🔹 Comentarios -->
     <div class="comments">
       <h3>Comentarios</h3>
       <div id="comentariosList"></div>
@@ -70,7 +80,7 @@
       <button class="btn-new" id="btnComentar">💬 Comentar</button>
     </div>
 
-    <!-- Modal Solución -->
+    <!-- 🔹 Modal Solución -->
     <div id="modalSolucion" class="modal" style="display:none">
       <div class="modal-content">
         <h2>Registrar Solución</h2>
@@ -85,7 +95,7 @@
 
   <!-- 🔹 Scripts -->
   <script>
-    // Hamburguesa responsive
+    // Menú hamburguesa responsive
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
 

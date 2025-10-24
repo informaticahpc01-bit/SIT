@@ -41,8 +41,7 @@
 
       <button id="btnLogout" class="btn-logout">Cerrar sesión</button>
       <div class="sidebar-footer">
-        Usuario: <span id="userName">Cargando...</span><br />
-        Sesión activa
+        <span id="userName" hidden>Cargando...</span><br />
       </div>
     </aside>
 
@@ -69,12 +68,8 @@
           <div class="chat-input">
             <button id="btnAdjunto" title="Adjuntar imagen">📎</button>
             <input type="file" id="fileInput" accept="image/*" hidden />
-            <input
-              type="text"
-              id="mensajeInput"
-              placeholder="Escribe un mensaje y presiona Enter…"
-              autocomplete="off"
-            />
+            <input type="text" id="mensajeInput" placeholder="Escribe un mensaje y presiona Enter…"
+              autocomplete="off" />
             <button id="btnEnviar">Enviar</button>
           </div>
 
